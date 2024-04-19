@@ -1,0 +1,18 @@
+{
+  "name": "innminds-tutor-dev",
+  "version": "1.0.0",
+  "description": "Innminds is a cutting-edge tutoring platform designed to revolutionize the way students learn and excel in their academic pursuits. With a user-friendly interface and powerful features, our application connects students with experienced tutors, providing personalized learning experiences tailored to their individual needs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo \"[Husky] pre-commit\""
+    }
+  },
+  "author": "",
+  "license": "ISC"
+}
