@@ -13,11 +13,6 @@
     "prepare": "husky",
     "ci": "npm run lint && npm run build && npm run test"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "echo \"[Husky] pre-commit\""
-    }
-  },
   "dependencies": {
     "next": "14.2.2",
     "prettier": "^3.2.5",
