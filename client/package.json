@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest -- --coverage",
+    "test": "jest",
     "test-latest": "jest --onlyChanged",
     "format": "prettier --write . && git add -A .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "ci": "npm run lint && npm run build && npm run test"
   },
   "husky": {
     "hooks": {
