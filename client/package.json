@@ -13,7 +13,7 @@
   },
   "husky":{
     "hooks":{
-      "pre-commit":"echo 'hello world'"
+      "pre-commit":"npm run test"
     }
   },
   "dependencies": {
