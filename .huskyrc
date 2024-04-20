@@ -1,6 +1,0 @@
-{"husky": {
-    "hooks": {
-      "pre-push": "cd client && npm run build"
-    }
-  }
-}
