@@ -10,8 +10,8 @@
     "test": "jest",
     "test-latest": "jest --onlyChanged",
     "format": "prettier --write . && git add -A .",
-    "prepare": "cd .. && husky client/.husky",
-    "ci": "npm run lint && npm run build && npm run test"
+    "ci": "npm run lint && npm run build && npm run test",
+    "prepare": "cd .. && husky client/.husky"
   },
   "dependencies": {
     "next": "14.2.2",
