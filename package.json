@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "Innminds is a cutting-edge tutoring platform designed to revolutionize the way students learn and excel in their academic pursuits. With a user-friendly interface and powerful features, our application connects students with experienced tutors, providing personalized learning experiences tailored to their individual needs.",
   "scripts": {
-    
+    "build":"cd client && npm run build",
     "prepare": "husky"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run build"
+    }
   },
   "author": "",
   "license": "ISC"
