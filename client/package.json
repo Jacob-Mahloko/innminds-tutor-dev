@@ -11,7 +11,9 @@
     "test-latest": "jest --onlyChanged",
     "format": "prettier --write . && git add -A .",
     "ci": "npm run lint && npm run build && npm run test",
-    "prepare": "cd .. && husky client/.husky"
+    "prepare": "cd .. && husky client/.husky",
+    "docker":"docker build -t innminds . && docker run -d -p 3000:3000 innminds",
+    "docker-start":"docker run -d -p 3000:3000 innminds"
   },
   "dependencies": {
     "next": "14.2.2",
