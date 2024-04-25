@@ -35,7 +35,7 @@ export const useStyles = createStyles(()=>({
         display:flex;
         flex-direction:row;
         justify-content:space-around;
-
+        margin:50px 0;
         @media (max-width: 768px) {
             display:flex;
             flex-direction:column;
@@ -50,14 +50,18 @@ export const useStyles = createStyles(()=>({
         width:40%;
         display:flex;
         flex-direction:row;
+        justify-content:center;
         align-items:center;
-
+        margin-top:55px;
+        margin-bottom:15px;
 
         @media (max-width: 768px) {
+            margin-top:-10px;
             flex-direction:column;
             text-align:center;
             justify-content:center;
             font-size:18px;
+            margin-bottom:20px;
         }
     `
 }));

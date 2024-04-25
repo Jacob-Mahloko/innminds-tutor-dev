@@ -1,12 +1,10 @@
-import { EditOutlined, LogoutOutlined, PlusCircleOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const useLogin=()=>{
     const router=useRouter();
-    const [showProfile,setShowProfile]=useState<boolean>(false);
-    
-    
+
     enum functionType{
         LOGIN='Login',
         GET_TUTOR='Get A Tutor',
@@ -15,8 +13,8 @@ const useLogin=()=>{
 
     const functions={
         [functionType.LOGIN]:()=>{router.push('/login')},
-        [functionType.GET_TUTOR]:()=>{router.push('/getTutor')},
-        [functionType.BECOME_TUTOR]:()=>{router.push('/login')}
+        [functionType.GET_TUTOR]:()=>{router.push('/registration?type=student')},
+        [functionType.BECOME_TUTOR]:()=>{router.push('/registration?type=tutor')}
     }
 
 

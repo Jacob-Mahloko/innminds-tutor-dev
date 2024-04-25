@@ -3,8 +3,9 @@ import { useLoginActions } from "@/providers/authProvider";
 import { Button, Card, Checkbox, Form, Input, message, type FormProps } from 'antd';
 import { useRouter } from 'next/navigation';
 import React from "react";
-import { ILogin } from "../../../models/interface";
-import { useStyles } from "./style";
+import { ILogin } from "../../../../models/interface";
+import { useStyles } from "./styles";
+import HButton from "@/components/Buttons/Home";
 
 
 const Login: React.FC  = () =>{
@@ -31,10 +32,9 @@ const Login: React.FC  = () =>{
    
     return (
         <div className={styles.container}>
-       
+            
             <Card className={styles.loginForm}>
                 <h1 className={styles.loginFormH1}>Hi,<br/>Welcome back</h1>
-
                 <Form
                     form={form}
                     name="basic"
@@ -70,14 +70,19 @@ const Login: React.FC  = () =>{
                     >
                       <div className={styles.RememberMeStyle}>
                         <Checkbox defaultChecked={true}>Remember me</Checkbox>
-                        <p className={styles.notregistered} onClick={()=> router.push('/getTutor')}>Not Register?</p>
+                        <p className={styles.notregistered} onClick={()=> router.push('/registration?type=student')}>Not Register?</p>
                       </div>
                     </Form.Item>
                     
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                      <Button type="primary" htmlType="submit">Submit</Button>
+                    <Form.Item  wrapperCol ={{span:24}}style={{display:'flex',justifyContent:'right'}}>
+                      <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',width:'100%'}}>
+                        <HButton/>
+                        <Button style={{width:100}} type="primary" htmlType="submit">Submit</Button>
+                      </div>
                     </Form.Item>
+                    
                 </Form>
+                
             </Card>
         
         </div>

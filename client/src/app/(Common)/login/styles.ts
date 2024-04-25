@@ -4,7 +4,7 @@ export const useStyles = createStyles(()=>({
     container:
     css`
         height: 100vh;
-        background-color: rgb(235, 247, 226);
+        background-color: rgb(92, 182, 209);
 
         display:flex;
         align-items: center;
@@ -22,7 +22,7 @@ export const useStyles = createStyles(()=>({
         width: 50%;
     `,
     loginForm:css`
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(225, 238, 245);
         height:80%;
         width: 70%;
         display: flex;

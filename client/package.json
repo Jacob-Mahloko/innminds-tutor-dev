@@ -8,7 +8,7 @@
     "start": "next start",
     "build-start": "npm run build && npm run start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --coverage",
     "test-latest": "jest --onlyChanged",
     "format": "prettier --write . && git add -A .",
     "ci": "npm run lint && npm run build && npm run test",
