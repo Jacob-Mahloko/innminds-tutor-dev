@@ -51,7 +51,7 @@ jobs:
         node-version: 18
     - run: npm i --f
     - run: npm run lint --if-present
-test:
+  test:
     defaults:
       run:
         working-directory: client
