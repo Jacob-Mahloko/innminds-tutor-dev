@@ -8,7 +8,6 @@ export const useStyles = createStyles(()=>({
         flex-direction:row;
        
         justify-content:space-around;
-        margin-top:40px;
         background-color:white;
         align-items:center;
 
@@ -52,7 +51,7 @@ export const useStyles = createStyles(()=>({
         flex-direction:row;
         justify-content:center;
         align-items:center;
-        margin-top:55px;
+        margin-top:-30px;
         margin-bottom:15px;
 
         @media (max-width: 768px) {

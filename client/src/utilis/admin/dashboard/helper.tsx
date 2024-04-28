@@ -1,4 +1,4 @@
-import { EditOutlined, PlusCircleOutlined, UserOutlined,LogoutOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusCircleOutlined, UserOutlined,LogoutOutlined,BarChartOutlined,ReconciliationOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -10,6 +10,8 @@ const useDashHelper=()=>{
         DASHBOARD='Dashboard',
         MANAGE_STUDENT='Manage Student',
         MANAGE_TUTOR='Manage Tutor',
+        REQUESTS='Requests',
+        STATISTICS='Statistics',
         LOGOUT='Log out'
     }
 
@@ -17,11 +19,13 @@ const useDashHelper=()=>{
         [functionType.DASHBOARD]:()=>{router.push('/admindash')},
         [functionType.MANAGE_STUDENT]:()=>{router.push('/user?type=Student')},
         [functionType.MANAGE_TUTOR]:()=>{router.push('/user?type=Tutor')},
+        [functionType.REQUESTS]:()=>{router.push('/adminRequest')},
+        [functionType.STATISTICS]:()=>{router.push('/statistics')},
         [functionType.LOGOUT]:()=>{router.push('/login')},
     }
 
-    const labels:functionType[]=[functionType.DASHBOARD,functionType.MANAGE_STUDENT,functionType.MANAGE_TUTOR,functionType.LOGOUT]
-    const items = [UserOutlined,  PlusCircleOutlined,EditOutlined,LogoutOutlined].map(
+    const labels:functionType[]=[functionType.DASHBOARD,functionType.MANAGE_STUDENT,functionType.MANAGE_TUTOR,functionType.REQUESTS,functionType.STATISTICS,functionType.LOGOUT]
+    const items = [UserOutlined,  PlusCircleOutlined,EditOutlined,ReconciliationOutlined,BarChartOutlined,LogoutOutlined].map(
       (icon, index) => ({
         key: String(index + 1),
         icon: React.createElement(icon),

@@ -6,15 +6,16 @@ export const useStyles = createStyles(()=>({
     css`
 
         width:100%;
-        margin-top:30px;
+        margin-top:10px;
         display:flex;
         flex-direction:row;
         justify-content:center;
         flex-wrap:wrap;
+        overflow:none;
 
         @media (max-width: 768px) {
             flex-direction:column;
-            height:70vh;
+            
         }
     `,
     tabs:
@@ -22,7 +23,6 @@ export const useStyles = createStyles(()=>({
         flex-shrink:0.5;
         width:45%;
         height:200px;
-        background-color:#00C2FF;
         color:white;
         
         margin:5px;
@@ -33,14 +33,14 @@ export const useStyles = createStyles(()=>({
         font-weight:bold;
 
         border-radius:8px;
-        
         &:hover{
             cursor:pointer;
+            
         }
         
         @media (max-width: 768px) {
             width:100%;
-            height:100px;
+            height:90px;
         }
     `
 }));

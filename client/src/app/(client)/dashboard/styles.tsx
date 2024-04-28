@@ -6,7 +6,7 @@ export const useStyles = createStyles(()=>({
     css`
 
         width:100%;
-        margin-top:30px;
+        margin-top:10px;
         display:flex;
         flex-direction:row;
         justify-content:center;
@@ -22,7 +22,6 @@ export const useStyles = createStyles(()=>({
         flex-shrink:0.5;
         width:45%;
         height:200px;
-        background-color:#00C2FF;
         color:white;
         
         margin:5px;
@@ -33,7 +32,6 @@ export const useStyles = createStyles(()=>({
         font-weight:bold;
 
         border-radius:8px;
-        
         &:hover{
             cursor:pointer;
         }

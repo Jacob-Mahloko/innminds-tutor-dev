@@ -45,3 +45,7 @@ export interface ICommentData{
     rating?:number;
 }
 
+export interface IEvent{
+    type?:string,
+    content?:string
+}

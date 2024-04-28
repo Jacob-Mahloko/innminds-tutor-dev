@@ -5,7 +5,7 @@ const TButton =()=>{
 
     const router=useRouter();
 
-    return (<Button onClick={()=>router.push('getTutor')}type="primary">Get A Tutor</Button>)
+    return (<Button onClick={()=>router.push('/registration?type=student')}type="primary">Get A Tutor</Button>)
 }
 
 export default TButton;

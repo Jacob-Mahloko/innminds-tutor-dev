@@ -16,19 +16,45 @@ export const useStyles = createStyles(()=>({
         width:90%;
         height:80vh;
     `,
-    loginImageContainer:css`
-        background-color: rgb(190, 230, 230);
+    rowCss:
+    css`
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:80%;
+        height:80%;
 
+        @media (max-width: 768px){
+            height:95%;
+        }
+    `
+    ,
+    loginImageContainer:css`
+        background-image: url('user.jpg');
+        background-size:cover;
         width: 50%;
-    `,
+        height:100%;
+        
+        @media (max-width: 768px) {
+            width:0; 
+        }
+`   ,
     loginForm:css`
         background-color: rgb(255, 255, 255);
-        height:80%;
-        width: 70%;
+        height:100%;
+        width: 50%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content:center;
         align-items: center;
+
+        @media (max-width: 768px) {
+            width:100%;
+            height:100%;
+            padding:20px;
+            overflow-y:auto;
+            scrollbar-width:none;
+        }
     `,
     loginFormH1:css`
         margin-top:-30px;
