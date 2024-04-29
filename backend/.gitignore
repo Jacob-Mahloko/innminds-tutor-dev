@@ -251,6 +251,6 @@ paket-files/
 .idea/
 *.sln.iml
 
-src/innminds-api.Web.Mvc/secrets.json
-src/innminds-api.Web.Host/secrets.json
-src/innminds-api.Migrator/secrets.json
+src/InnmindsApi.Web.Mvc/secrets.json
+src/InnmindsApi.Web.Host/secrets.json
+src/InnmindsApi.Migrator/secrets.json
