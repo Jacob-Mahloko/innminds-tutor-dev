@@ -1,5 +1,6 @@
+'use client'
 import { Table } from 'antd';
-import {FC} from 'react';
+import {FC, Suspense} from 'react';
 
 const columns = [
     {
@@ -26,11 +27,13 @@ const columns = [
 
 const Requests:FC=()=>{
     return(
-        <div>
-            <h1>Requests</h1>
-            <hr/>
-            <Table columns={columns}/>
-        </div>
+        <Suspense fallback={<h1>Failed requests</h1>}>
+            <div>
+                <h1>Requests</h1>
+                <hr/>
+                <Table columns={columns}/>
+            </div>
+        </Suspense>
         
     );
 }

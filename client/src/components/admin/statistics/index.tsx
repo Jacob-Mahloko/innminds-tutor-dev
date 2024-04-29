@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Statistic } from 'antd';
@@ -8,19 +9,18 @@ const HeaderStats: React.FC = () => {
     return(
         <Row gutter={6}>
             <Col span={8}>
-            <Card className={styles.statCards}>
+            <Card key="new students" className={styles.statCards}>
                 <Statistic
                 title="New Students"
                 value={11}
                 precision={0}
                 valueStyle={{ color: '#3f8600' }}
                 prefix={<ArrowUpOutlined />}
-                suffix=""
                 />
             </Card>
             </Col>
             <Col span={8}>
-            <Card className={styles.statCards}>
+            <Card key="dereg students" className={styles.statCards}>
                 <Statistic
                 title="Deregistered Students"
                 value={3}
@@ -32,13 +32,12 @@ const HeaderStats: React.FC = () => {
             </Card>
             </Col>
             <Col  span={8}>
-            <Card className={styles.statCards}>
+            <Card key="students" className={styles.statCards}>
                 <Statistic
                 title="Number of students"
                 value={23}
                 precision={0}
                 valueStyle={{ color: 'black' }}
-                suffix=""
                 />
             </Card>
             </Col>

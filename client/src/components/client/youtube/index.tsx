@@ -1,5 +1,4 @@
-import React, { FC,useState, useEffect } from 'react';
-import axios from 'axios';
+import { FC } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { useStyles } from './styles';
 

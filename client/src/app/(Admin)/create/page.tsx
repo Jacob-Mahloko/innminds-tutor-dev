@@ -1,4 +1,3 @@
-
 'use client'
 import CreateUser from "@/components/admin/CreateUser/CreateUser";
 import { FC, Suspense } from 'react';

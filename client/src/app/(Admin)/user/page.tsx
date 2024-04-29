@@ -1,4 +1,3 @@
-
 'use client'
 import { Button } from 'antd';
 import { Suspense } from 'react';
@@ -14,12 +13,12 @@ const User=()=>{
     const router=useRouter();
       
     return(
-      <Suspense fallback={<div />}>
+      <Suspense fallback={<h1>Failed create user</h1>}>
         <div className={styles.container}>
-        <SearchBar/>
-        <div className={styles.content}>
-          <Button className={styles.button} onClick={()=>router.push(`/create?type=${type}`)}>Create {type}</Button>
-        </div>
+          <SearchBar/>
+          <div className={styles.content}>
+            <Button className={styles.button} onClick={()=>router.push(`/create?type=${type}`)}>Create {type}</Button>
+          </div>
         </div>
       </Suspense>
     );
