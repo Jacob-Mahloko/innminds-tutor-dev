@@ -1,9 +1,8 @@
 'use client'
 import { Inter } from "next/font/google";
 import { Layout, Menu, theme } from 'antd';
-import useDashHelper from "@/utilis/admin/dashboard/helper";
+import useClientDashHelper from "@/utilis/client/dashboard/helper";
 import { Suspense } from "react";
-import Sider from "antd/es/layout/Sider";
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,7 +15,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
 
-    const {items} =useDashHelper();
+    const {items} =useClientDashHelper();
 
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -26,32 +25,19 @@ export default function AdminLayout({
     <html lang="en">
       <body className={inter.className}>
       <Layout style={{height:'100vh'}}>
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
-        >
-
-          <Menu
-              theme="dark"
-              mode="inline"
-              items={items}
-              style={{ flex: 1, minWidth: 0,justifyContent:'right',marginRight:20,marginTop:60}}
-            />
-        </Sider>
         <Layout>
-          <Header style={{ padding: 0, background: 'dark',alignContent:'center',textAlign:'center'}} >
-            <div className="demo-logo" ><h2 style={{color:'white'}}>Innminds Admin</h2></div>
-            
+          <Header style={{ padding: 20,display:'flex', background: 'dark',alignItems:'center'}} >
+            <div className="demo-logo" ><h2 style={{color:'white',width:300}}>Innminds Portal</h2></div>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              items={items}
+              style={{ flex: 1, minWidth: 0,justifyContent:'right'}}
+            />
           </Header>
           
           <Content style={{ padding: '0 40px' ,height:'100vh',overflowY:'auto',backgroundColor:'white'}}>
-            <Suspense fallback={<h3>admin dashboard broke</h3>}>
+            <Suspense fallback={<h3>dashboard broke</h3>}>
               {children}
             </Suspense>
           </Content>

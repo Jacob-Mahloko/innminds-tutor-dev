@@ -1,6 +1,6 @@
 'use client'
 import { useLoginActions } from "@/providers/authProvider";
-import { Button, Card, Checkbox, Form, Input, message, type FormProps } from 'antd';
+import { Button, Card, Checkbox, Col, Form, Input, Row, message, type FormProps } from 'antd';
 import { useRouter } from 'next/navigation';
 import React from "react";
 import { ILogin } from "../../../../models/interface";
@@ -33,8 +33,11 @@ const Login: React.FC  = () =>{
     return (
         <div className={styles.container}>
             
-            <Card className={styles.loginForm}>
-                <h1 className={styles.loginFormH1}>Hi,<br/>Welcome back</h1>
+            <Row className={styles.rowCss}>
+                <Col className={styles.loginImageContainer}></Col>
+                <Col className={styles.loginForm}>
+                
+                <h1 className={styles.loginFormH1}>Welcome back</h1>
                 <Form
                     form={form}
                     name="basic"
@@ -82,8 +85,9 @@ const Login: React.FC  = () =>{
                     </Form.Item>
                     
                 </Form>
+                </Col>
                 
-            </Card>
+                </Row>
         
         </div>
     );
