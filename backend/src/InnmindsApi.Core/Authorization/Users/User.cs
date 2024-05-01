@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Extensions;
 
@@ -14,6 +15,7 @@ namespace InnmindsApi.Authorization.Users
             return Guid.NewGuid().ToString("N").Truncate(16);
         }
 
+        [AbpAllowAnonymous]
         public static User CreateTenantAdminUser(int tenantId, string emailAddress)
         {
             var user = new User
