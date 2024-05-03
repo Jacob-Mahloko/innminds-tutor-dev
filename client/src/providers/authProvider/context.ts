@@ -1,10 +1,13 @@
 import { createContext } from 'react';
-import { ILogin,IUser } from '../../../models/interface';
+import { ILogin,ILoginResponse,IUser } from '../../../models/interface';
 
 export const INITIAL_STATE: IUserStateContext={}
 
 export interface IUserStateContext {
-    readonly UserLogin? : ILogin;
+    isLoading?:boolean;
+    isSuccess?:boolean;
+    isError?:boolean;
+    readonly UserLogin? :ILoginResponse;
     readonly currentUser?: IUser;   
 }
 

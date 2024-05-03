@@ -30,6 +30,7 @@ export interface IUser {
     email: string;
     password: string;
     gender:number;
+    roleNames:string[];
   }
   
 
@@ -49,3 +50,11 @@ export interface IEvent{
     type?:string,
     content?:string
 }
+
+export interface ILoginResponse {
+    accessToken: string;
+    encryptedAccessToken: string;
+    expireInSeconds: number;
+    userId: number;
+    role: string;
+  }

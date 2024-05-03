@@ -17,7 +17,7 @@ const Login: React.FC  = () =>{
 
     const onFinish :FormProps<ILogin>["onFinish"] =(values:ILogin)=>{
       if(login){
-        //login(values);
+        login(values);
         console.log(values)
         form.resetFields();
       }
