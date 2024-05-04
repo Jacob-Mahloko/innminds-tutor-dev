@@ -58,3 +58,19 @@ export interface ILoginResponse {
     userId: number;
     role: string;
   }
+
+export interface ILesson{
+    topic:string;
+    noteUrl:string;
+    videoUrl:string;
+    homeworkUrl:string;
+}
+
+
+
+export interface ISubject{
+  name:string;
+  grade:string;
+  tutor:IUser;
+  lessons: ILesson[];
+}

@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { ILogin, ILoginResponse, IUser } from '../../../models/interface';
+import { ILoginResponse, IUser } from '../../../models/interface';
 import { IUserStateContext } from './context';
 
 export enum UserActionEnum{
