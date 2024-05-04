@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions";
-import { TutorStateContext} from "./context";
+import { AdminStateContext} from "./context";
 
 
 export const reducer = handleActions({
