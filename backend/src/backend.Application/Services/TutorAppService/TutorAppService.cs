@@ -26,7 +26,7 @@ namespace backend.Services.TutorAppService
             _userManager = userManager;
         }
 
-        public async Task<TutorDto> CreateStudentAsync(CreateTutorDto input)
+        public async Task<TutorDto> CreateTutorAsync(CreateTutorDto input)
         {
             var student = ObjectMapper.Map<Tutor>(input);
             student.User = await CreateUser(input);
@@ -37,13 +37,13 @@ namespace backend.Services.TutorAppService
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<TutorDto>> GetAllStudentAsync()
+        public async Task<List<TutorDto>> GetAllTutorAsync()
         {
             var users = await _repository.GetAllListAsync();
             return ObjectMapper.Map<List<TutorDto>>(users);
         }
 
-        public async Task<TutorDto> GetStudentAsync(Guid id)
+        public async Task<TutorDto> GetTutorAsync(Guid id)
         {
             var user = await _repository.GetAsync(id);
             if (user == null)
@@ -55,7 +55,7 @@ namespace backend.Services.TutorAppService
             return ObjectMapper.Map<TutorDto>(user);
         }
 
-        public Task<TutorDto> UpdateStudentAsync(TutorDto input)
+        public Task<TutorDto> UpdateTutorAsync(TutorDto input)
         {
             throw new NotImplementedException();
         }

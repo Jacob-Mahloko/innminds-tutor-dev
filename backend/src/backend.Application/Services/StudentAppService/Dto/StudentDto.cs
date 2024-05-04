@@ -50,5 +50,7 @@ namespace backend.Services.StudentAppService.Dto
         /// 
         /// </summary>
         public string Grade { get; set; }
+
+        
     }
 }

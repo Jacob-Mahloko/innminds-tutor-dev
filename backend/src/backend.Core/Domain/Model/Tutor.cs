@@ -8,7 +8,6 @@ namespace backend.Domain.Model
 {
     public class Tutor:Person
     {
-        public string Subjects { get; set; }
         public string Grades { get; set; }
     }
 }

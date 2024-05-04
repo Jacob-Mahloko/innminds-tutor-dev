@@ -49,10 +49,8 @@ namespace backend.Services.StudentAppService.Dto
         /// <summary>
         /// 
         /// </summary>
-        public string Subjects { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string Grade { get; set; }
+
+        public Guid [] subjectIds { get; set; }
     }
 }

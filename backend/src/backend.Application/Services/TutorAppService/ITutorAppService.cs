@@ -11,9 +11,9 @@ namespace backend.Services.TutorAppService
 {
     public interface ITutorAppService:IApplicationService
     {
-        Task<TutorDto> CreateStudentAsync(CreateTutorDto input);
-        Task<TutorDto> UpdateStudentAsync(TutorDto input);
-        Task<TutorDto> GetStudentAsync(Guid id);
-        Task<List<TutorDto>> GetAllStudentAsync();
+        Task<TutorDto> CreateTutorAsync(CreateTutorDto input);
+        Task<TutorDto> UpdateTutorAsync(TutorDto input);
+        Task<TutorDto> GetTutorAsync(Guid id);
+        Task<List<TutorDto>> GetAllTutorAsync();
     }
 }

@@ -13,6 +13,12 @@ namespace backend.EntityFrameworkCore
         public DbSet<Student> Students { get; set; }
         public DbSet<Tutor> Tutors { get; set; }
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<ClassRoom> ClassRooms { get; set; }
+        public DbSet<StudentClassRoom> StudentClassRooms { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
+
         public backendDbContext(DbContextOptions<backendDbContext> options)
             : base(options)
         {

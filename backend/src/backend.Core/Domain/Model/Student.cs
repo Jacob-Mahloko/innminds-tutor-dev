@@ -9,7 +9,7 @@ namespace backend.Domain.Model
     public class Student :Person
     {
         public string About { get; set; }
-        public string Subjects { get; set; }
-        public string Grade {  get; set; }
+        public string Grade { get; set; }
+       
     }
 }
