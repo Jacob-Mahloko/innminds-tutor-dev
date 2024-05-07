@@ -2,6 +2,7 @@
 using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore.Uow;
 using backend.Domain.Model;
+using backend.Services.LessonAppService.Dto;
 using backend.Services.StudentClassRoomAppService.Dto;
 using backend.Services.SubjectAppService.Dto;
 using Microsoft.EntityFrameworkCore;
@@ -67,15 +68,28 @@ namespace backend.Services.StudentClassRoomAppService
             return ObjectMapper.Map<StudentClassRoomDto>(await _repository.UpdateAsync(ObjectMapper.Map<StudentClassRoom>(input)));
         }
 
-        public async Task<List<SubjectDto>> GetStudentSubjects(Guid id) {
+        public async Task<List<SubjectDto>> GetStudentSubjects() {
 
-            var subject = await _repository.GetAllIncluding(x => x.Student, x => x.ClassRoom).Where(x => x.Student.Id == id).Select(x => x.ClassRoom.Subject).ToListAsync();
+            var subject = await _repository.GetAllIncluding(x => x.Student, x => x.ClassRoom.Subject.Lessons).Where(x => x.Student.User.Id == AbpSession.UserId).Select(x => x.ClassRoom.Subject).ToListAsync();
             if (subject == null)
             {
                 return null;
             }
 
             return ObjectMapper.Map<List<SubjectDto>>(subject);
+
+        }
+        public async Task<List<LessonDto>> GetStudentLesson()
+        {
+
+            var subject = await _repository.GetAllIncluding(x => x.Student, x => x.ClassRoom.Subject.Lessons).Where(x => x.Student.User.Id == AbpSession.UserId).Select(x => x.ClassRoom.Subject.Lessons).ToListAsync();
+            
+            if (subject == null)
+            {
+                return null;
+            }
+
+            return ObjectMapper.Map<List<LessonDto>>(subject[2]);
 
         }
     }

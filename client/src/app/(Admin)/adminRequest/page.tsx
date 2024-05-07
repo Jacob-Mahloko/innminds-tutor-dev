@@ -1,37 +1,30 @@
 'use client'
-import { Table } from 'antd';
-import {FC, Suspense} from 'react';
+import { Select, Table } from 'antd';
+import {FC, Suspense, useEffect} from 'react';
+import { useAdmin } from '@/providers/adminProvider';
+import { RequestEnum } from '@/utilis/defaults/default';
+import { Label } from 'recharts';
+import { IRequest } from '../../../../models/interface';
+import { useRequest } from '@/utilis/admin/requests/helper';
 
-const columns = [
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: 'Details',
-      dataIndex: 'detail',
-      key: 'detail',
-    },
-    {
-      title: 'Username',
-      dataIndex: 'Username',
-      key: 'Username',
-    },
-    {
-        title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-      },
-  ];
+
+
+const {Option}=Select;
 
 const Requests:FC=()=>{
+  const {requests,getRequests}=useAdmin();
+  const {columns} = useRequest();
+  useEffect(()=>{
+    if(!requests){
+        getRequests();
+    }
+  },[])
     return(
         <Suspense fallback={<h1>Failed requests</h1>}>
             <div>
                 <h1>Requests</h1>
                 <hr/>
-                <Table columns={columns}/>
+                <Table columns={columns} dataSource={requests?.map(data=>({...data,key:data.id}))}/>
             </div>
         </Suspense>
         

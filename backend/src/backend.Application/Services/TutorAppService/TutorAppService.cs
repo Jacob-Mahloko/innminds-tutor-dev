@@ -6,6 +6,7 @@ using backend.Domain.Model;
 using backend.Services.StudentAppService.Dto;
 using backend.Services.TutorAppService.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,19 @@ namespace backend.Services.TutorAppService
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<TutorDto>> GetAllTutorAsync()
+        public async Task<List<TutorDto>> GetAllTutorAsync(string?searchTerm)
         {
-            var users = await _repository.GetAllListAsync();
+            var query = _repository.GetAllIncluding().AsQueryable();
+
+            if (string.IsNullOrEmpty(searchTerm) == false)
+            {
+                query = query.Where(x => x.Email.Contains(searchTerm) ||
+                        x.Name.Contains(searchTerm) ||
+                        x.Username.Contains(searchTerm) ||
+                        x.PhoneNumber.Contains(searchTerm) ||
+                        x.Surname.Contains(searchTerm));
+            }
+            var users = await query.ToListAsync();
             return ObjectMapper.Map<List<TutorDto>>(users);
         }
 

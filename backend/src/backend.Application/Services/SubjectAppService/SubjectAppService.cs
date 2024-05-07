@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace backend.Services.SubjectAppService
 {
@@ -83,7 +85,7 @@ namespace backend.Services.SubjectAppService
 
         public async Task<List<SubjectDto>> GetAllSubjectAsync()
         {
-            return ObjectMapper.Map<List<SubjectDto>>(await _repository.GetAllListAsync());
+            return ObjectMapper.Map<List<SubjectDto>>(await _repository.GetAllIncluding(x=>x.Lessons).ToListAsync());
         }
         public async Task<SubjectDto> AddTutorAsync(AddTutorDto input) {
 
@@ -106,9 +108,12 @@ namespace backend.Services.SubjectAppService
             return ObjectMapper.Map<SubjectDto>(subject);
         }
 
-
-        public async Task<SubjectDto> AddLesson([FromQuery]Guid id,[FromBody]CreateLessonDto input) {
-            var subject =await  _repository.FirstOrDefaultAsync(id);
+        public async Task<List<SubjectDto>> GetSubjectByGrade(string grade) { 
+            var subjects= await _repository.GetAllListAsync(x=>x.grade==grade);
+            return ObjectMapper.Map<List<SubjectDto>>(subjects);
+        }
+        public async Task<SubjectDto> AddLesson([FromQuery]string grade, [FromQuery]string name,[FromBody]CreateLessonDto input) {
+            var subject =await _repository.FirstOrDefaultAsync(x => x.grade == grade && x.Name == name);
             if (subject == null)
             {
                 throw new UserFriendlyException("Subject doesn't exist");

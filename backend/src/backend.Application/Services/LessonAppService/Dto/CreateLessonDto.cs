@@ -16,6 +16,7 @@ namespace backend.Services.LessonAppService.Dto
         public string NotesUrl { get; set; }
         public string VideoUrl { get; set; }
         public string HomeworkUrl { get; set; }
-        
+        public string DueDate { get; set; }
+
     }
 }

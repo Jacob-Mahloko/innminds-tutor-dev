@@ -4,17 +4,25 @@ import { useRouter } from 'next/navigation';
 import { FC, PropsWithChildren, useContext, useReducer } from 'react';
 import { INITIAL_STATE, TutorActionContext, TutorStateContext ,ITutorActionContext,ITutorStateContext} from './context';
 import { reducer } from './reducer';
-
+import { ILesson } from '../../../models/interface';
+import axios from 'axios';
+import { Console } from 'console';
+import { message } from 'antd';
 
 const TutorProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const { push } = useRouter();
 
   
-
+  const createLesson= async (subject:string,grade:string,payload:ILesson)=>{
+  
+    await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Subject/AddLesson?grade=${grade}&name=${subject}`,payload)
+    .then(res=>{message.success("Successfully created Lesson")})
+    .catch(err=>console.log(err))
+  }
   return (
     <TutorStateContext.Provider value={{}}>
-      <TutorActionContext.Provider value={{ }}>
+      <TutorActionContext.Provider value={{ createLesson}}>
         {children}
       </TutorActionContext.Provider>
     </TutorStateContext.Provider>
@@ -31,7 +39,7 @@ export const useTutorState = (): ITutorStateContext => {
 };
 
 export const useTutorActions = ():  ITutorActionContext=> {
-  const context = useContext(TutorStateContext);
+  const context = useContext(TutorActionContext);
   if (!context) {
     throw new Error("useLoginActions must be used within a UserProvider");
   }

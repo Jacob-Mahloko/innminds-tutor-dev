@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { ILesson } from '../../../models/interface';
 
 
 export const INITIAL_STATE: ITutorStateContext={}
@@ -8,7 +9,7 @@ export interface ITutorStateContext {
 }
 
 export interface ITutorActionContext{
-    
+    createLesson?:(subject:string,grade:string,payload:ILesson)=>void;
 }
 
 const TutorStateContext = createContext<ITutorStateContext>(INITIAL_STATE);

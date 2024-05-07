@@ -3,18 +3,20 @@
 import { message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { FC, PropsWithChildren, useContext, useEffect, useReducer } from 'react';
+import { FC, PropsWithChildren, useContext, useEffect, useReducer, useState } from 'react';
 import { ILogin, ILoginResponse, IUser } from '../../../models/interface';
 import { logOutUserRequestAction, loginSuccessAction, setCurrentUserRequestAction } from './actions';
 import { INITIAL_STATE, IUserActionContext, IUserStateContext, UserActionContext, UserContext } from './context';
 import { reducer } from './reducer';
 import { getRole } from '@/utilis/decoder/decoder';
-
+import { useLocalStorage } from 'react-use';
+import { headers } from 'next/headers';
 
 const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const { push } = useRouter();
-
+  
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
@@ -59,7 +61,7 @@ const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     const expireInSeconds = state.UserLogin?.expireInSeconds;
     const userId = state.UserLogin?.userId;
     const role = state.UserLogin?.role;
- 
+    
     if (typeof window !== "undefined") {
       if (
         accessToken &&
@@ -74,7 +76,7 @@ const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         localStorage.setItem("userId", userId + "");
         localStorage.setItem("role", role + "");
       } else {
-        localStorage.clear();
+        //localStorage.clear();
       }
     }
   }, [state]);
@@ -100,7 +102,7 @@ const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       // Optionally, provide user feedback about the login failure
     })
   }
-  
+
   const createUser = async (payload: IUser) => {
     
       const response = await axios.post('',payload).then(response=>{
@@ -111,9 +113,17 @@ const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   
   }
 
-  const getUserDetails = async () => {
-    
-      await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}`+'/User/GetCurrentUser').then(response=>{
+  const getUserDetails = () => {
+      axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/User/GetCurrentUser`,{
+        headers:{
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        }
+      }).then(response=>{
+        console.log(response)
           dispatch(setCurrentUserRequestAction(response.data.result));
         })
         .catch( (error) =>{

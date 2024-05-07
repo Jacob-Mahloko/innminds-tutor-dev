@@ -13,6 +13,8 @@ namespace backend.Domain.Model
         public virtual string NotesUrl { get; set; }
         public virtual string VideoUrl { get; set; }
         public virtual string HomeworkUrl { get; set; }
+
+        public virtual string DueDate { get; set; }
        
     }
 }

@@ -1,27 +1,35 @@
 'use client'
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import {FC} from 'react';
+import {FC, Suspense} from 'react';
 import { useStyles } from './styles';
+import { IRequest } from '../../../../models/interface';
+import { RequestEnum } from '@/utilis/defaults/default';
+import { useStudent } from '@/providers/studentProvider';
 
 const options=[
-    {label:'Wrong Grade Assigned',value:'wrongSubject'},
-    {label:'Choose Different Tutor',value:'physical science'},
-    {label:'Add Student to Class',value:'life science'},
-    {label:'Change Subject',value:'computer science'},
-    {label:'Email  Update',value:''},
-    {label:'Phone number update',value:''},
-    {label:'Other',value:''}
+    {key:1,label:'Wrong Grade Assigned',value:'wrongSubject'},
+    {key:2,label:'Choose Different Tutor',value:'Choose Different Tutor'},
+    {key:3,label:'Add Student to Class',value:'Add Student to Class'},
+    {key:4,label:'Change Subject',value:'Change Subject'},
+    {key:5,label:'Email  Update',value:'Email  Update'},
+    {key:6,label:'Phone number update',value:'Phone number update'},
+    {key:7,label:'Other',value:'Other'}
 ]
 
 const Requests:FC=()=>{
 
     const [form] = Form.useForm();
-     
-    const onFinish=()=>{}
+    const {sendStudentRequest}=useStudent();
+
+    const onFinish=(values:IRequest)=>{
+        sendStudentRequest({...values,status:RequestEnum.Await});
+        form.resetFields();
+    }
     const onFinishFailed=()=>{}
     const {styles} =useStyles();
     return(
+            <Suspense fallback={<h1>Requests</h1>}>
             <Row className={styles.container}>
                 <Col ><div className={styles.imageContainer}></div></Col>
                 <Col className={styles.content}>
@@ -42,8 +50,8 @@ const Requests:FC=()=>{
                         
                         <Form.Item<string>
                             label="Select service request"
-                            name='seriveRequest'
-                            rules={[{ required: true, message: 'Please pick atleast one subject' }]}
+                            name='reason'
+                            rules={[{ required: true, message: 'Please pick atleast one Reason' }]}
                             style={{alignContent:'left'}}
                             
                         >
@@ -58,7 +66,7 @@ const Requests:FC=()=>{
                         </Form.Item>
                         <Form.Item<string>
                             label="Additonal Information"
-                            name="name"
+                            name="info"
                             rules={[{ required: true, message: 'Please input your name!' }]}
                             
                         >
@@ -74,7 +82,7 @@ const Requests:FC=()=>{
                     </div>
                 </Col>
             </Row>
-        
+            </Suspense>
     );
 }
 

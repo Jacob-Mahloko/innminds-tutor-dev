@@ -14,6 +14,6 @@ namespace backend.Services.TutorAppService
         Task<TutorDto> CreateTutorAsync(CreateTutorDto input);
         Task<TutorDto> UpdateTutorAsync(TutorDto input);
         Task<TutorDto> GetTutorAsync(Guid id);
-        Task<List<TutorDto>> GetAllTutorAsync();
+        Task<List<TutorDto>> GetAllTutorAsync(string?searchTerm);
     }
 }

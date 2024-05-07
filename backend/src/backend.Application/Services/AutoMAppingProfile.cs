@@ -6,6 +6,7 @@ using backend.Services.AdminAppService.Dto;
 using backend.Services.ClassRoomAppService.Dto;
 using backend.Services.LessonAppService.Dto;
 using backend.Services.RegistrationAppService.Dto;
+using backend.Services.RequestAppService.Dto;
 using backend.Services.StudentAppService.Dto;
 using backend.Services.SubjectAppService.Dto;
 using backend.Services.TutorAppService.Dto;
@@ -106,7 +107,12 @@ namespace backend.Services
             //
 
             CreateMap<RegistrationDto,Registration>().ReverseMap();
-           
+
+            //
+            // Request Mapping
+            //
+            CreateMap<Request, CreateRequestDto>().ReverseMap();
+            CreateMap<Request, RequestDto>().ReverseMap();
         }
     }
 }

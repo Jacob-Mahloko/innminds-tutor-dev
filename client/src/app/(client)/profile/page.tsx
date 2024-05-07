@@ -1,33 +1,50 @@
 'use client'
-import { Button, Form, Input } from 'antd';
-import { FC } from 'react';
+import { Button, Form, Input, Switch } from 'antd';
+import { FC, use, useEffect, useState } from 'react';
 import { useStyles } from './styles';
+import profilepicture from '../../../../public/profile.jpg';
+import Image from 'next/image';
+import { useStudent } from '@/providers/studentProvider';
+import TextArea from 'antd/es/input/TextArea';
 
 const Profile:FC=()=>{
     const {styles}=useStyles();
+    const [edit,setEdit]=useState(true);
+    const {profile,getStudentProfile}=useStudent();
+    useEffect(()=>{
+        if(!profile){
+            getStudentProfile();
+        }
+        console.log(profile)
+    })
+
+    const onFinish =(values:any)=>{
+        console.log();
+    }
     return(
         <div style={{padding:0,margin:0}}>
             <div className={styles.topContainer}>
-                <div className={styles.profileImage}/>
+                <Image className={styles.profileImage} src={profilepicture} alt='profile picture'/>
                 <div><Button className={styles.buttonContainer} style={{backgroundColor:'green'}}>upload</Button><Button className={styles.buttonContainer} style={{backgroundColor:'gray'}}>remove</Button></div>
                 <div className={styles.about}>
                     <h3 style={{textAlign:'center'}}>About</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est aperiam asperiores assumenda sed, velit vel 
-                        maiores corporis enim voluptatum ratione, sit suscipit aliquid delectus rerum provident, non atque ipsa cumque!
+                    <p>
+                        {profile?.about}
                     </p>
                 </div>
             </div>
-            <h2>Personal Details</h2>
+            <h2>Personal Details</h2> <Switch checkedChildren="Editing" unCheckedChildren="Click to Edit" onClick={()=>setEdit(()=>!edit)}/>
             <div className={styles.mainContainer}>
                 <Form
                     layout="vertical"
                     
                     initialValues={{  // Setting initial values if needed
-                        username: 'Jake707',
-                        email: 'johndoe@example.com',
-                        phone:'012 012 4441',
-                        fUllName:'Jacob Mahloko',
-                        grade:12
+                        username: profile?.username,
+                        email: profile?.email,
+                        phone:profile?.phoneNumber,
+                        surame: profile?.surname,
+                        grade:profile?.grade,
+                        name:profile?.name
 
                     }} 
                 > 
@@ -37,19 +54,19 @@ const Profile:FC=()=>{
                                 label="Username"
                                 name="username"
                             >
-                                <Input placeholder="Username" disabled />
+                                <Input placeholder="Username" disabled={edit} />
                             </Form.Item>
                             <Form.Item 
                                 label="Email"
                                 name='email'
                             >
-                                <Input placeholder="Email" disabled />
+                                <Input placeholder="Email" disabled={edit} />
                             </Form.Item>
                             <Form.Item 
                                 label="Grade"
                                 name='grade'
                             >
-                                <Input placeholder="grade" disabled />
+                                <Input placeholder="grade" disabled={edit} />
                             </Form.Item>
                         </div>
                         <div className={styles.formInput2}>
@@ -57,13 +74,31 @@ const Profile:FC=()=>{
                                 label="Phone"
                                 name='phone'
                             >
-                                <Input placeholder="000 000 0000" disabled />
+                                <Input placeholder="000 000 0000" disabled={edit} />
                             </Form.Item>
                             <Form.Item 
-                                label="FullName"
-                                name="fUllName"    
+                                label="Name"
+                                name="name"    
                             >
-                                <Input placeholder="full name" disabled />
+                                <Input placeholder="name" disabled={edit} />
+                            </Form.Item>
+                            <Form.Item 
+                                label="Surname"
+                                name="surname"    
+                            >
+                                <Input placeholder="surname" disabled={edit} />
+                            </Form.Item>
+                            <Form.Item 
+                                label="About"
+                                name="About"
+                                hidden={edit}    
+                            >
+                                <TextArea placeholder="about you"  />
+                            </Form.Item>
+                            <Form.Item 
+                                hidden={edit}
+                            >
+                                <Button type='primary' htmlType='submit'>Save Changes</Button>
                             </Form.Item>
                         </div>
                     </div>

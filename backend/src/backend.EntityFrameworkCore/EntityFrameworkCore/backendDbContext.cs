@@ -18,6 +18,7 @@ namespace backend.EntityFrameworkCore
         public DbSet<ClassRoom> ClassRooms { get; set; }
         public DbSet<StudentClassRoom> StudentClassRooms { get; set; }
         public DbSet<Registration> Registrations { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         public backendDbContext(DbContextOptions<backendDbContext> options)
             : base(options)

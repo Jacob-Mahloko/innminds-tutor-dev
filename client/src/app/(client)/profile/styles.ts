@@ -30,7 +30,6 @@ export const useStyles = createStyles(()=>({
        
         height:150px;
         width:150px;
-        background-color:red;
         border-radius:50%;
     `,
     buttonContainer:

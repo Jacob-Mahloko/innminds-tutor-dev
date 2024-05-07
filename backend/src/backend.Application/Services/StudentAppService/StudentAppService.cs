@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
+using Abp.Extensions;
 using Abp.IdentityFramework;
 using backend.Authorization.Users;
 using backend.Domain.Model;
@@ -36,6 +37,11 @@ namespace backend.Services.StudentAppService
         public async Task<StudentDto> CreateStudentAsync(CreateStudentDto input)
         {
             var student = ObjectMapper.Map<Student>(input);
+
+            student.IdentityNo = "0000000000000";
+            input.Username=student.Username=input.Email;
+            input.Password=student.Password = "Innminds@7072";
+            input.About = student.About = "Please write something about you";
             student.User = await CreateUser(input);
             var newStudent = await _repository.InsertAsync(student);
             //add student to class rooms
@@ -58,9 +64,21 @@ namespace backend.Services.StudentAppService
             return ObjectMapper.Map<StudentDto>(newStudent);
         }
 
-        public async Task<List<StudentDto>> GetAllStudentAsync()
+        public async Task<List<StudentDto>> GetAllStudentAsync(string? searchTerm)
         {
-            var users = await _repository.GetAllIncluding().ToListAsync();
+            var query = _repository.GetAllIncluding().AsQueryable();
+
+            if (searchTerm.IsNullOrEmpty() == false)
+            {
+                query = query.Where(x => x.Email.Contains(searchTerm) ||
+                        x.Grade.Contains(searchTerm) ||
+                        x.Name.Contains(searchTerm) ||
+                        x.Username.Contains(searchTerm) ||
+                        x.PhoneNumber.Contains(searchTerm) ||
+                        x.Surname.Contains(searchTerm));
+            }
+            var users = await query.ToListAsync();
+
             return ObjectMapper.Map<List<StudentDto>>(users);
         }
 
@@ -76,6 +94,17 @@ namespace backend.Services.StudentAppService
             return ObjectMapper.Map<StudentDto>(user);
         }
 
+        public async Task<StudentDto> GetCurrentStudentAsync()
+        {
+            var user = await _repository.FirstOrDefaultAsync(x=>x.User.Id==AbpSession.UserId);
+            if (user == null)
+            {
+                return null;
+
+            }
+
+            return ObjectMapper.Map<StudentDto>(user);
+        }
         public Task<StudentDto> UpdateStudentAsync(StudentDto input)
         {
             throw new NotImplementedException();

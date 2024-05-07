@@ -24,6 +24,7 @@ namespace backend.Services.RegistrationAppService
         public async Task<RegistrationDto> CreateAsync(RegistrationDto input)
         {
             var reg = ObjectMapper.Map<Registration>(input);
+            
             return ObjectMapper.Map<RegistrationDto>(await _repository.InsertAsync(reg));
             
         }

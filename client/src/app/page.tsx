@@ -4,7 +4,7 @@ import TButton from '@/components/Buttons/TButton';
 import useLogin from '@/utilis/common/login/helper';
 import { Layout, Menu, theme } from 'antd';
 import Image from 'next/image';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import homeTutor from '../../public/homeTutor.webp';
 import reading from '../../public/reading.jpg';
 import highSchool from '../../public/highSchool.jpg';
@@ -25,6 +25,7 @@ const Home:FC=()=>{
 
 
   return (
+    <Suspense fallback={<h1>Application Failed</h1>}>
     <Layout style={{height:'100vh'}}>
       <Header style={{ display: 'flex', alignItems: 'center'}}>
         
@@ -96,6 +97,7 @@ const Home:FC=()=>{
       </Footer>
     
     </Layout>
+    </Suspense>
   );
 }
 

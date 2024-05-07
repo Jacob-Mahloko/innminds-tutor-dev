@@ -1,3 +1,4 @@
+'use client'
 import { FC } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { useStyles } from './styles';
@@ -11,7 +12,7 @@ const YouTubePlayer:FC<props> = ({ videoId }) => {
 const {styles}=useStyles();
   return ( 
     <div className={styles.container}>
-        <ReactPlayer url='https://www.youtube.com/watch?v=H5GxH9atUNY'  controls={true} width="100%" height="100%" />
+        <ReactPlayer url={videoId}  controls={true} width="100%" height="100%" />
     </div>);
 };
 

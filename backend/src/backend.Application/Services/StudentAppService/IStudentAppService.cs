@@ -14,6 +14,6 @@ namespace backend.Services.StudentAppService
         Task<StudentDto> CreateStudentAsync(CreateStudentDto input);
         Task<StudentDto> UpdateStudentAsync(StudentDto input);
         Task<StudentDto> GetStudentAsync(Guid id);
-        Task<List<StudentDto>> GetAllStudentAsync();
+        Task<List<StudentDto>> GetAllStudentAsync(string?searchTerm);
     }
 }
