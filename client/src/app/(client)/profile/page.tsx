@@ -1,34 +1,53 @@
 'use client'
-import { Button, Form, Input, Switch } from 'antd';
+import { Button, Form, Input, Switch, Upload } from 'antd';
 import { FC, use, useEffect, useState } from 'react';
 import { useStyles } from './styles';
 import profilepicture from '../../../../public/profile.jpg';
 import Image from 'next/image';
 import { useStudent } from '@/providers/studentProvider';
 import TextArea from 'antd/es/input/TextArea';
+import { IStudent } from '../../../../models/interface';
+import { UploadOutlined } from '@ant-design/icons';
 
 const Profile:FC=()=>{
     const {styles}=useStyles();
     const [edit,setEdit]=useState(true);
-    const {profile,getStudentProfile}=useStudent();
+    const {profile,getStudentProfile,editProfile}=useStudent();
+    const [form] = Form.useForm();
     useEffect(()=>{
         if(!profile){
             getStudentProfile();
         }
-        console.log(profile)
-    })
+    },[])
 
-    const onFinish =(values:any)=>{
-        console.log();
+    if(!profile){
+        getStudentProfile();
     }
+
+    useEffect(()=>{
+        form.setFieldsValue({ 
+            username: profile?.username,
+            email: profile?.email,
+            phone:profile?.phoneNumber,
+            surname: profile?.surname,
+            grade:profile?.grade,
+            name:profile?.name,
+            about:profile?.about
+        })
+    },[profile])
+
+    const onFinish =(values:IStudent)=>{
+        //console.log({...values,file:values.imageUrl.file.originFileObj})
+        editProfile({...profile,...values,file:values.imageUrl.file.originFileObj});  
+    }
+    
     return(
         <div style={{padding:0,margin:0}}>
             <div className={styles.topContainer}>
-                <Image className={styles.profileImage} src={profilepicture} alt='profile picture'/>
-                <div><Button className={styles.buttonContainer} style={{backgroundColor:'green'}}>upload</Button><Button className={styles.buttonContainer} style={{backgroundColor:'gray'}}>remove</Button></div>
+                <Image className={styles.profileImage} src={profile?.imageString==''||profile?.imageString==null?profilepicture:`data:image/png;base64,${profile?.imageString}`} alt='profile picture' height={150} width={150}/>
                 <div className={styles.about}>
-                    <h3 style={{textAlign:'center'}}>About</h3>
-                    <p>
+                    <h3 style={{textAlign:'center',fontSize:22}}>About</h3>
+                    <p style={{textAlign:'center',fontSize:18}}>
                         {profile?.about}
                     </p>
                 </div>
@@ -37,19 +56,30 @@ const Profile:FC=()=>{
             <div className={styles.mainContainer}>
                 <Form
                     layout="vertical"
-                    
+                    form={form}
                     initialValues={{  // Setting initial values if needed
                         username: profile?.username,
                         email: profile?.email,
                         phone:profile?.phoneNumber,
-                        surame: profile?.surname,
+                        surname: profile?.surname,
                         grade:profile?.grade,
-                        name:profile?.name
-
+                        name:profile?.name,
+                        about:profile?.about
                     }} 
+                    onFinish={onFinish}
                 > 
+
                     <div className={styles.form}>
                         <div className={styles.formInput1}>
+                            <Form.Item<IStudent> 
+                            label="Upload Image:" 
+                            name='imageUrl'
+                            hidden={edit}
+                            >
+                            <Upload style={{marginLeft:10}} disabled={edit}>
+                                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                            </Upload>
+                            </Form.Item>
                             <Form.Item 
                                 label="Username"
                                 name="username"
@@ -90,7 +120,7 @@ const Profile:FC=()=>{
                             </Form.Item>
                             <Form.Item 
                                 label="About"
-                                name="About"
+                                name="about"
                                 hidden={edit}    
                             >
                                 <TextArea placeholder="about you"  />

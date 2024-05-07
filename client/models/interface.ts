@@ -84,6 +84,9 @@ export interface IStudent{
   about: string;
   grade: string;
   subjectIds: string[];
+  file:any;
+  imageUrl:any;
+  imageString:string;
 }
 
 export interface ITutor{

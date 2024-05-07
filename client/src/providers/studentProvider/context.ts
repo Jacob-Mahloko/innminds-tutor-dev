@@ -16,7 +16,7 @@ export interface IStudentActionContext{
     getStudentProfile?:()=>void;
     sendStudentRequest?:(payload:IRequest)=>void;
     getLessons?:()=>void;
-    
+    editProfile?:(payload:IStudent)=>void;
 }
 
 const StudentStateContext = createContext<IStudentStateContext>(INITIAL_STATE);

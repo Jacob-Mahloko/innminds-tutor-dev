@@ -9,6 +9,7 @@ using backend.Services.StudentAppService.Dto;
 using backend.Services.StudentClassRoomAppService.Dto;
 using backend.Services.SubjectAppService;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,19 @@ namespace backend.Services.StudentAppService
         private readonly IRepository<ClassRoom, Guid> _classRoomRepository;
         private readonly UserManager _userManager;
         private readonly StudentClassRoomAppService.StudentClassRoomAppService _studentClassRoomAppService;
+        private readonly FileAppService.FileAppService _fileAppService;
 
-        public StudentAppService(IRepository<Student, Guid> repository,IRepository<ClassRoom,Guid> classRoomRepository, UserManager userManager,StudentClassRoomAppService.StudentClassRoomAppService studentClassRoomAppService)
+        public StudentAppService(IRepository<Student, Guid> repository,
+                                IRepository<ClassRoom,Guid> classRoomRepository,
+                                UserManager userManager,
+                                StudentClassRoomAppService.StudentClassRoomAppService studentClassRoomAppService,
+                                FileAppService.FileAppService fileAppService)
         {
             _repository = repository;
             _classRoomRepository = classRoomRepository;
             _userManager = userManager;
             _studentClassRoomAppService = studentClassRoomAppService;
+            _fileAppService = fileAppService;
         }
 
         public async Task<StudentDto> CreateStudentAsync(CreateStudentDto input)
@@ -96,18 +103,46 @@ namespace backend.Services.StudentAppService
 
         public async Task<StudentDto> GetCurrentStudentAsync()
         {
-            var user = await _repository.FirstOrDefaultAsync(x=>x.User.Id==AbpSession.UserId);
+            var user = await _repository.GetAllIncluding(x=>x.Image).Where(x=>x.User.Id==AbpSession.UserId).ToListAsync();
             if (user == null)
             {
                 return null;
-
             }
 
-            return ObjectMapper.Map<StudentDto>(user);
+            var userdto = ObjectMapper.Map<List<StudentDto>>(user);
+
+            if (userdto[0].ImageId!=null) {
+                userdto[0].ImageString = await _fileAppService.GetFile((Guid)userdto[0].ImageId);
+            }
+ 
+            return userdto[0];
         }
-        public Task<StudentDto> UpdateStudentAsync(StudentDto input)
+
+
+        [Consumes("multipart/form-data")]
+        public async Task<StudentDto> UpdateStudentAsync([FromForm]StudentDto input)
         {
-            throw new NotImplementedException();
+            try
+            {
+                StoredFile file;
+                if (input.File != null)
+                {
+                    file = await _fileAppService.CreateFile(new FileAppService.Dto.storedFileDto { FileData = input.File });
+                    var user = ObjectMapper.Map<Student>(input);
+                    user.Image = file;
+                    return ObjectMapper.Map<StudentDto>(await _repository.UpdateAsync(user));
+
+                }
+                else
+                {
+                    var user = ObjectMapper.Map<Student>(input);
+                    return ObjectMapper.Map<StudentDto>(await _repository.UpdateAsync(user));
+
+                }
+            }catch(Exception ex)
+            {
+                throw new InvalidOperationException("Failed to Create " + ex.Message);
+            }
         }
         public async Task<User> CreateUser(CreateStudentDto input)
         {

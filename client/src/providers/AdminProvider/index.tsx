@@ -5,9 +5,9 @@ import { FC, PropsWithChildren, useContext, useReducer } from 'react';
 import { INITIAL_STATE, AdminActionContext, AdminStateContext ,IAdminActionContext,IAdminStateContext} from './context';
 import { reducer } from './reducer';
 import axios from 'axios'
-import { GetRegistrationApplications, GetRequests, GetSubjectByGrade, SearchStudentAction, SearchTutorAction } from './action';
+import { GetGradeStatistics, GetRegistrationApplications, GetRequests, GetSubjectByGrade, GetSubjectStatistics, SearchStudentAction, SearchTutorAction } from './action';
 import { message } from 'antd';
-import { IApplication, IQuery, IStudent } from '../../../models/interface';
+import { IApplication, IQuery, IStudent, ITutor } from '../../../models/interface';
 
 
 const AdminProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
@@ -34,6 +34,11 @@ const AdminProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   }
 
   const registerStudent=(payload:IStudent)=>{
+    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/CreateTutor`,payload)
+    .then(()=>{message.success('Successfully Created Student')})
+    .catch(err=>console.log(err))
+  }
+  const registerTutor=(payload:ITutor)=>{
     axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/CreateStudent`,payload)
     .then(()=>{message.success('Successfully Created Student')})
     .catch(err=>console.log(err))
@@ -66,9 +71,20 @@ const AdminProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     .then(res=>{dispatch(SearchTutorAction(res.data.result))})
   }
   
+  const getGradeStat=async ()=>{
+    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/StudentClassRoom/GetNumberofStudentInGrades`)
+    .then(res=>{dispatch(GetGradeStatistics(res.data.result))})
+    .catch(err=>console.log(err))
+  }
+
+  const getSubjectStat=async ()=>{
+    await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/StudentClassRoom/GetNumberofStudentInGradesSubject`)
+    .then(res=>{dispatch(GetSubjectStatistics(res.data.result))})
+    .catch(err=>console.log(err)) 
+  }
   return (
     <AdminStateContext.Provider value={{...state}}>
-      <AdminActionContext.Provider value={{ getSubjectByGrade,sendApplication,getAllRegistration,registerStudent,getRequests,searchStudent,searchTutor}}>
+      <AdminActionContext.Provider value={{ getSubjectByGrade,sendApplication,getAllRegistration,registerStudent,getRequests,searchStudent,searchTutor,getGradeStat,getSubjectStat,registerTutor}}>
         {children}
       </AdminActionContext.Provider>
     </AdminStateContext.Provider>

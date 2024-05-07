@@ -18,6 +18,7 @@ namespace backend.Domain.Model
         public string Password    {get;set;}
         public string Email       {get;set;}
         public string ProfileImage {get;set;}
+        public StoredFile? Image { get;set;}
         public User? User { get;set;}
 
     }

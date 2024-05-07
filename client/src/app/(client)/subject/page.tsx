@@ -19,14 +19,14 @@ const Subject:FC=()=>{
                 ]
   return (
     <Suspense fallback={<h3>Subject failed</h3>}>
-    <h2 style={{textDecoration:'none',marginTop:25}}>{subjectName}</h2>
-    <hr/>
-    <div className={styles.dashtabs}>
-        
-        {subject.map(data=>(
-            <div key={data.key} className={styles.tabs} style={{backgroundColor:data.color}} onClick={()=>router.push(`${data.route}`)} >{data.subject}</div>
-        ))}
-    </div>
+      <h2 style={{textDecoration:'none',marginTop:25}}>{subjectName}</h2>
+      <hr/>
+      <div className={styles.dashtabs}>
+          
+          {subject.map(data=>(
+              <div key={data.key} className={styles.tabs} style={{backgroundColor:data.color}} onClick={()=>router.push(`${data.route}`)} >{data.subject}</div>
+          ))}
+      </div>
     </Suspense>
   );
 }

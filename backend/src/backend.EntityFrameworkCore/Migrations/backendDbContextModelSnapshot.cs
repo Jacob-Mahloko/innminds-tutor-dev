@@ -1601,6 +1601,9 @@ namespace backend.Migrations
                     b.Property<string>("IdentityNo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1632,6 +1635,8 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("UserId");
 
@@ -1827,6 +1832,50 @@ namespace backend.Migrations
                     b.ToTable("Requests");
                 });
 
+            modelBuilder.Entity("backend.Domain.Model.StoredFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileExtention")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("FileLength")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Filename")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StoredFiles");
+                });
+
             modelBuilder.Entity("backend.Domain.Model.Student", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1856,6 +1905,9 @@ namespace backend.Migrations
 
                     b.Property<string>("IdentityNo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1888,6 +1940,8 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("UserId");
 
@@ -2006,6 +2060,9 @@ namespace backend.Migrations
                     b.Property<string>("IdentityNo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -2037,6 +2094,8 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("UserId");
 
@@ -2327,9 +2386,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Domain.Model.Admin", b =>
                 {
+                    b.HasOne("backend.Domain.Model.StoredFile", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("backend.Authorization.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Image");
 
                     b.Navigation("User");
                 });
@@ -2352,9 +2417,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Domain.Model.Student", b =>
                 {
+                    b.HasOne("backend.Domain.Model.StoredFile", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("backend.Authorization.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Image");
 
                     b.Navigation("User");
                 });
@@ -2385,9 +2456,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Domain.Model.Tutor", b =>
                 {
+                    b.HasOne("backend.Domain.Model.StoredFile", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("backend.Authorization.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Image");
 
                     b.Navigation("User");
                 });

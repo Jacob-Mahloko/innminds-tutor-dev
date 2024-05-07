@@ -7,7 +7,7 @@ import { INITIAL_STATE, StudentActionContext, StudentStateContext ,IStudentActio
 import { reducer } from './reducer';
 import axios from 'axios';
 import { GetLesson, GetProfile, GetSubject } from './action';
-import { IQuery, IRequest } from '../../../models/interface';
+import { IQuery, IRequest, IStudent } from '../../../models/interface';
 import { message } from 'antd';
 
 
@@ -81,9 +81,36 @@ const StudentProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     .catch(err=>{console.log(err)})
   }
 
+  const editProfile=async (payload:IStudent)=>{
+    const formData = new FormData();
+    formData.append('id',payload.id.toString());
+    formData.append('name',payload.name.toString());
+    formData.append('surname',payload.surname.toString());
+    formData.append('username',payload.username.toString());
+    formData.append('grade',payload.grade.toString());
+    formData.append('file',payload.file);
+    formData.append('email',payload.email.toString());
+    formData.append('about',payload.about.toString());
+    formData.append('phoneNumber',payload.phoneNumber.toString());
+   
+
+    //console.log(formData.getAll('file'))
+     await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/UpdateStudent`,formData,
+      { headers: {
+        'Content-Type': 'multipart/form-data',
+      }}
+     )
+     .then(res=>{
+       console.log(res.data.result);
+       message.success("Successfully");
+       dispatch(GetProfile(res.data.result))
+     })
+     .catch(err=>console.log(err))
+  }
+
   return (
     <StudentStateContext.Provider value={{...state}}>
-      <StudentActionContext.Provider value={{getSubjects,getStudentProfile,sendStudentRequest,getLessons}}>
+      <StudentActionContext.Provider value={{getSubjects,getStudentProfile,sendStudentRequest,getLessons,editProfile}}>
         {children}
       </StudentActionContext.Provider>
     </StudentStateContext.Provider>

@@ -2,6 +2,23 @@ import { createContext } from 'react';
 import { IApplication, IQuery, IRequest, IStudent, ISubject, ITutor } from '../../../models/interface';
 
 
+export interface IGradeStat{
+    grade10:number;
+    grade11:number;
+    grade12:number;
+}
+
+export interface ISubjectStat{
+    grade10LS:number;
+    grade11LS:number;
+    grade12LS:number;
+    grade10M:number;
+    grade11M:number;
+    grade12M:number;
+    grade10PS:number;
+    grade11PS:number;
+    grade12PS:number;
+}
 export const INITIAL_STATE: IAdminStateContext={}
 
 export interface IAdminStateContext {
@@ -10,6 +27,8 @@ export interface IAdminStateContext {
    requests?:IRequest[];
    searchStudentState?:IStudent[];
    searchTutorState?:ITutor[];
+   gradeStats?:IGradeStat;
+   subjectStats?:ISubjectStat;
 }
 
 export interface IAdminActionContext{
@@ -17,10 +36,13 @@ export interface IAdminActionContext{
     sendApplication?:(payload:IApplication)=>void;
     getAllRegistration?:()=>void;
     registerStudent?:(payload:IStudent)=>void;
-    registerTutor?:()=>void;
+    registerTutor?:(payload:ITutor)=>void;
     getRequests?:()=>void;
     searchStudent?:(payload:IQuery)=>void;
     searchTutor?:(payload:IQuery)=>void;
+    getGradeStat?:()=>void;
+    getSubjectStat?:()=>void;
+
 }
 
 const AdminStateContext = createContext<IAdminStateContext>(INITIAL_STATE);

@@ -13,17 +13,19 @@ const SearchBar:FC =()=>{
     const type=useSearchParams().get('type');
     const searchTerm=useSearchParams().get('searchTerm');
     const {searchStudent,searchTutor}=useAdmin();
+
     useEffect(()=>{
-      if(searchTerm!=''||searchTerm!=null){
-        if(searchTerm!='null'){
-          push(`/user?type=${type}`);
-          
+      if(searchTerm!=' '||searchTerm!=null){
+        if(searchTerm!='null'|| searchTerm!=null){
+          //push(`/user?type=${type}&searchTerm=${searchTerm}`);
+          searchStudent({searchTerm})
         }else{
-        onFinish({searchTerm:searchTerm});}
+          push(`/user?type=${type}`);}
       }else{
         push(`/user?type=${type}`);
       }
     },[])
+
     const onFinish=(value:IQuery)=>{
         if(value.searchTerm==''||value.searchTerm==null){message.error('please enter keyword to search');push(`/user?type=${type}`);return;}
         if(type=='Student'){

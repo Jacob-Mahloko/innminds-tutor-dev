@@ -18,25 +18,22 @@ const Lessons:FC=()=>{
   const router=useRouter();
   const subjectName=useSearchParams().get('name');
   const {subjects,getSubjects}=useStudent();
-  const [lesson,setLesson]=useState<ILesson[]>([]);
 
   useEffect(()=>{
 
     if(!subjects){
       getSubjects();
     }
-
-    console.log(subjects,'data')
-    const subject:ISubject[]=subjects?.filter(data=>data.name==subjectName);
-    console.log(subject)
-    setLesson(subject?.at(0)?.lessons)
   },[])
-  return (<Suspense fallback={<h3>Lessons failed</h3>}>
+
+  console.log(subjects)
+  return (
+  <Suspense fallback={<h3>Lessons failed</h3>}>
     <h2 style={{textDecoration:'none',marginTop:25}}>Lessons</h2>
     <hr/>
     <div className={styles.dashtabs}>
         
-        {lesson?.map((data,index)=>(
+        {subjects?.filter(data=>data.name==subjectName)?.at(0)?.lessons?.map((data,index)=>(
             <div key={data.id} className={styles.tabs} style={{backgroundColor:colors[index]}} onClick={()=>router.push(`/lesson?subject=${subjectName}&name=${data.topic}`)} >{data.topic}</div>
         ))} 
     </div>

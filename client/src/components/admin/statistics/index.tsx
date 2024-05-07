@@ -1,32 +1,39 @@
 'use client'
-import React from 'react';
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { useAdmin } from '@/providers/adminProvider';
 import { Card, Col, Row, Statistic } from 'antd';
+import React, { Suspense, useEffect } from 'react';
 import { useStyles } from './style';
 
 const HeaderStats: React.FC = () => {
     const {styles}=useStyles();
+    const {gradeStats,getGradeStat}=useAdmin();
+    useEffect(()=>{
+        if(!gradeStats){
+            getGradeStat();
+        }
+    },[])
+
+    console.log(gradeStats)
     return(
+        <Suspense fallback={<h1>stats header broke</h1>}>
         <Row gutter={6}>
             <Col span={8}>
-            <Card key="new students" className={styles.statCards}>
+            <Card key="grade 10" className={styles.statCards}>
                 <Statistic
-                title="New Students"
-                value={11}
+                title="Number of students: Grade 10"
+                value={gradeStats?.grade10}
                 precision={0}
-                valueStyle={{ color: '#3f8600' }}
-                prefix={<ArrowUpOutlined />}
+                valueStyle={{ color: 'black' }}
                 />
             </Card>
             </Col>
             <Col span={8}>
             <Card key="dereg students" className={styles.statCards}>
                 <Statistic
-                title="Deregistered Students"
-                value={3}
+                title="Number of students: Grade 11"
+                value={gradeStats?.grade11}
                 precision={0}
-                valueStyle={{ color: '#cf1322' }}
-                prefix={<ArrowDownOutlined />}
+                valueStyle={{ color: 'black' }}
                 suffix=""
                 />
             </Card>
@@ -34,14 +41,15 @@ const HeaderStats: React.FC = () => {
             <Col  span={8}>
             <Card key="students" className={styles.statCards}>
                 <Statistic
-                title="Number of students"
-                value={23}
+                title="Number of students: Grade 12"
+                value={gradeStats?.grade12}
                 precision={0}
                 valueStyle={{ color: 'black' }}
                 />
             </Card>
             </Col>
         </Row>
+        </Suspense>
 )};
 
 export default HeaderStats;

@@ -8,5 +8,7 @@ export const reducer = handleActions({
     [AdminActionEnum.GetAllRegistrationApplications]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>({...state,...action.payload}),
     [AdminActionEnum.GetRequests]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>({...state,...action.payload}),
     [AdminActionEnum.SearchStudent]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>{console.log(action);return{...state,...action.payload}},
-    [AdminActionEnum.SearchTutor]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>({...state,...action.payload})
+    [AdminActionEnum.SearchTutor]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>({...state,...action.payload}),
+    [AdminActionEnum.GetGradeStat]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>({...state,...action.payload}),
+    [AdminActionEnum.GetSubjectStat]:(state:IAdminStateContext,action:ReduxActions.Action<IAdminStateContext>)=>({...state,...action.payload})
 },{});

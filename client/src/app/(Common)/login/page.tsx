@@ -73,7 +73,7 @@ const Login: React.FC  = () =>{
                     >
                       <div className={styles.RememberMeStyle}>
                         <Checkbox defaultChecked={true}>Remember me</Checkbox>
-                        <p className={styles.notregistered} onClick={()=> router.push('/registration?type=student')}>Not Register?</p>
+                        <p className={styles.notregistered} onClick={()=> router.push('/registration?type=student')}>Not Registered?</p>
                       </div>
                     </Form.Item>
                     

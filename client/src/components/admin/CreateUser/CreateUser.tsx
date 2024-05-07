@@ -1,9 +1,9 @@
 'use client'
+import { useAdminActions, useAdminState } from '@/providers/adminProvider';
+import { validateEscapeScequence, validatePhoneNumber } from "@/utilis/validator/validator";
 import { Button, Col, Form, Input, Row, Select, message, type FormProps } from 'antd';
 import { useRouter } from 'next/navigation';
-import { useAdminActions ,useAdminState} from '@/providers/adminProvider';
-import { validateEscapeScequence, validatePhoneNumber } from "@/utilis/validator/validator";
-import { FC, useState } from "react";
+import { FC, Suspense } from "react";
 import { IStudent } from "../../../../models/interface";
 import { useStyles } from "./styles";
 
@@ -20,7 +20,7 @@ interface props{
 
 const CreateUser: FC<props>  = ({children,type}) =>{
 
-    const {registerStudent,getSubjectByGrade}=useAdminActions();
+    const {registerStudent,getSubjectByGrade,registerTutor}=useAdminActions();
     const {gradeSubjects} =useAdminState();
     const {styles}=useStyles();
     const router = useRouter();
@@ -28,10 +28,18 @@ const CreateUser: FC<props>  = ({children,type}) =>{
     
 
     const onFinish :FormProps<IStudent>["onFinish"] =(values:IStudent)=>{
-      if(registerStudent){
-        registerStudent(values);
-        form.resetFields();
+      if(type=='Student'){
+        if(registerStudent){
+          registerStudent(values);
+          form.resetFields();
+        }
+      }else{
+        if(registerTutor){
+          registerTutor({...values})
+          form.resetFields();
+        }
       }
+      
     }
 
     const onFinishFailed:FormProps<IStudent>["onFinishFailed"] = (error) =>{
@@ -39,103 +47,105 @@ const CreateUser: FC<props>  = ({children,type}) =>{
       message.error("failed")
 
     }
+
     const getSubjects= (value:any)=>{
       getSubjectByGrade(value); 
     }
 
-    console.log(gradeSubjects)
     return (
-        <div className={styles.container}>
-          <Row className={styles.rowCss}>
-            <Col className={styles.loginImageContainer}></Col>
-            <Col className={styles.loginForm}>
-              <h1>{type} Registration </h1>
-              <Form
-                  form={form}
-                  name="basic"
-                  labelCol={{ span: 8 }}
-                  style={{maxWidth:800}}
-                  initialValues={{ isLibrarian:false,remember: true }}
-                  onFinish={onFinish}
-                  onFinishFailed={onFinishFailed}
-                  autoComplete="off"
-              >     
+        <Suspense fallback={<h1>create broke</h1>}>
+          <div className={styles.container}>
+            <Row className={styles.rowCss}>
+              <Col className={styles.loginImageContainer}></Col>
+              <Col className={styles.loginForm}>
+                <h1>{type} Registration </h1>
+                <Form
+                    form={form}
+                    name="basic"
+                    labelCol={{ span: 8 }}
+                    style={{maxWidth:800}}
+                    initialValues={{ isLibrarian:false,remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                >     
+                          
+                    <Form.Item<string>
+                      label="Name"
+                      name="name"
+                      rules={[{ required: true, message: 'Please input your name!' },{validator:validateEscapeScequence}]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item<string>
+                      label="Surname"
+                      name="surname"
+                      rules={[{ required: true, message: 'Please input your surname' },{validator:validateEscapeScequence}]}
+                    >
+                      <Input />
+                    </Form.Item>
+                    
+
+                    <Form.Item<string>
+                      label="email"
+                      name="email"
+                      rules={[{ required: true, message: 'Please input your email' },{type:'email',message:'Please input correct email'},{validator:validateEscapeScequence}]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item<string>
+                      label="Phone"
+                      name="phoneNumber"
+                      rules={[{ required: true, message: 'Please input your cell number' },{validator:validatePhoneNumber},{validator:validateEscapeScequence}]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item<string>
+                        label="Grade"
+                        name='grade'
+                        rules={[{ required: true, message: 'Please pick a grade' },{validator:validateEscapeScequence}]}
+                        style={{alignContent:'right'}}
                         
-                  <Form.Item<string>
-                    label="Name"
-                    name="name"
-                    rules={[{ required: true, message: 'Please input your name!' },{validator:validateEscapeScequence}]}
-                  >
-                    <Input />
-                  </Form.Item>
+                    >
+                        <Select
+                          
+                          allowClear
+                          style={{ width: '100%' }}
+                          placeholder="Please select Grade"
+                          options={grade}
+                          onChange={getSubjects}
+                        />
+                    </Form.Item>
 
-                  <Form.Item<string>
-                    label="Surname"
-                    name="surname"
-                    rules={[{ required: true, message: 'Please input your surname' },{validator:validateEscapeScequence}]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  
+                    <Form.Item<string>
+                        label="Subjects"
+                        name='subjectIds'
+                        rules={[{ required: true, message: 'Please pick atleast one subject' }]}
+                        style={{alignContent:'right'}}
+                    >
+                        <Select
+                          mode="multiple"
+                          allowClear
+                          style={{ width: '100%' }}
+                          placeholder="Please select"
+                          options={gradeSubjects?.map((data)=>({label:data?.name,value:data?.id}))}
+                        />
+                    </Form.Item>
+                    
 
-                  <Form.Item<string>
-                    label="email"
-                    name="email"
-                    rules={[{ required: true, message: 'Please input your email' },{type:'email',message:'Please input correct email'},{validator:validateEscapeScequence}]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item<string>
-                    label="Phone"
-                    name="phoneNumber"
-                    rules={[{ required: true, message: 'Please input your cell number' },{validator:validatePhoneNumber},{validator:validateEscapeScequence}]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item<string>
-                      label="Grade"
-                      name='grade'
-                      rules={[{ required: true, message: 'Please pick a grade' },{validator:validateEscapeScequence}]}
-                      style={{alignContent:'right'}}
-                      
-                  >
-                      <Select
-                        
-                        allowClear
-                        style={{ width: '100%' }}
-                        placeholder="Please select Grade"
-                        options={grade}
-                        onChange={getSubjects}
-                      />
-                  </Form.Item>
-
-                  <Form.Item<string>
-                      label="Subjects"
-                      name='subjectIds'
-                      rules={[{ required: true, message: 'Please pick atleast one subject' }]}
-                      style={{alignContent:'right'}}
-                  >
-                      <Select
-                        mode="multiple"
-                        allowClear
-                        style={{ width: '100%' }}
-                        placeholder="Please select"
-                        options={gradeSubjects?.map((data)=>({label:data?.name,value:data?.id}))}
-                      />
-                  </Form.Item>
-                  
-
-                  <Form.Item wrapperCol={{  span: 30 }} style={{}}>
-                    <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',width:'100%'}}>
-                      <Button type="primary" htmlType="submit" style={{width:100,marginLeft:10}}>Save</Button>
-                    </div>
-                  </Form.Item>
-              </Form>
-            </Col>
-          </Row>
-        </div>
+                    <Form.Item wrapperCol={{  span: 30 }} style={{}}>
+                      <div style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',width:'100%'}}>
+                        <Button type="primary" htmlType="submit" style={{width:100,marginLeft:10}}>Save</Button>
+                      </div>
+                    </Form.Item>
+                </Form>
+              </Col>
+            </Row>
+          </div>
+        </Suspense>
     );
 }
 
