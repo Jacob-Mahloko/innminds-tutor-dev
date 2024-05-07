@@ -1,11 +1,12 @@
 
-import AdminProvider from "@/providers/adminProvider";
-import AuthProvider from "@/providers/authProvider";
-import StudentProvider from "@/providers/studentProvider";
-import TutorProvider from "@/providers/tutorProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/providers/authProvider";
+import AdminProvider from "@/providers/adminProvider";
+import StudentProvider from "@/providers/studentProvider";
+import { Suspense } from "react";
+import TutorProvider from "@/providers/tutorProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,11 @@ export default function RootLayout({
       <AdminProvider>
         <TutorProvider>
           <StudentProvider>
-            
+            <Suspense>
               <html lang="en">
                 <body className={inter.className}>{children}</body>
               </html>
-            
+            </Suspense>
           </StudentProvider>
         </TutorProvider>
       </AdminProvider>

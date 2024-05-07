@@ -20,10 +20,6 @@ const Profile:FC=()=>{
         }
     },[])
 
-    if(!profile){
-        getStudentProfile();
-    }
-
     useEffect(()=>{
         form.setFieldsValue({ 
             username: profile?.username,
