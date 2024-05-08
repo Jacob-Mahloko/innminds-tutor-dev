@@ -43,7 +43,7 @@ const CreateUser: FC<props>  = ({children,type}) =>{
     }
 
     const onFinishFailed:FormProps<IStudent>["onFinishFailed"] = (error) =>{
-      console.log(error)
+      
       message.error("failed")
 
     }

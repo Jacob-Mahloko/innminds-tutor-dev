@@ -53,7 +53,7 @@ const Registration:FC=()=>{
   const {registrationApplications}=useAdminState();
   const router=useRouter();
   useEffect(()=>{
-    if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+    if(localStorage.getItem('role')!='admin'){
       router.push('/');
     }
   },[])

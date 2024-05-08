@@ -39,7 +39,7 @@ const ACalendar: FC = () => {
             return value.year() === dueDate[0] && value.month() === dueDate[1] && value.date() === dueDate[2];
         });
 
-        console.log(loan)
+        
         return (loan!=undefined?
              <ul className="events" style={{marginLeft:-30,overflowX:'hidden',scrollbarWidth:'thin'}} >
                 <li>{loan?.topic}</li>

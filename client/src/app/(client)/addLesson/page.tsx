@@ -46,7 +46,7 @@ const AddLesson: React.FC  = () =>{
     },[])
 
     const onFinish :FormProps<Lesson>["onFinish"] =(values:Lesson)=>{
-        console.log({...values,dueDate:dayjs(values.Date).format('YYYY-MM-DD')})
+        
         createLesson(values.subject,
                         values.grade,
                         {
@@ -61,7 +61,7 @@ const AddLesson: React.FC  = () =>{
     }
 
     const onFinishFailed:FormProps<Lesson>["onFinishFailed"] = (error) =>{
-      console.log(error)
+      
       message.error("failed")
 
     }

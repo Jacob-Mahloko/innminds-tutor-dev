@@ -90,7 +90,7 @@ const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         
         dispatch(loginSuccessAction({...response.data.result, role: newRole}));
         message.success('Login Success');
-        console.log(newRole)
+        
         if (newRole==='istudent'|| newRole==='itutor') {
           push('/dashboard');
         } else {
@@ -123,7 +123,7 @@ const AuthProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
           'Expires': '0',
         }
       }).then(response=>{
-        console.log(response)
+        
           dispatch(setCurrentUserRequestAction(response.data.result));
         })
         .catch( (error) =>{

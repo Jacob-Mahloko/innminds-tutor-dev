@@ -74,7 +74,7 @@ namespace backend.Services.AdminAppService
             var user = ObjectMapper.Map<User>(input);
             ObjectMapper.Map(input, user);
 
-            string[] RoleNames = { "IADMIN","ITUTOR","ISTUDENT"}; 
+            string[] RoleNames = { "IADMIN"}; 
 
             //check if properties email and username not null or empty 
             if (!string.IsNullOrEmpty(user.NormalizedUserName) && !string.IsNullOrEmpty(user.NormalizedEmailAddress))

@@ -13,7 +13,7 @@ const HeaderStats: React.FC = () => {
         }
     },[])
 
-    console.log(gradeStats)
+    
     return(
         <Suspense fallback={<h1>stats header broke</h1>}>
         <Row gutter={6}>

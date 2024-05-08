@@ -8,9 +8,9 @@ import {FC, Suspense, useEffect} from 'react';
 const Statistics:FC=()=>{
     const {subjectStats,getSubjectStat}=useAdmin();
     const router=useRouter();
-    
+
     useEffect(()=>{
-        if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+        if(localStorage.getItem('role')!='admin'){
           router.push('/');
         }
       },[])
