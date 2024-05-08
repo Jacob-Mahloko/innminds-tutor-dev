@@ -6,9 +6,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 const Create:FC=()=>{
       const type=useSearchParams().get('type');
       const router=useRouter();
-      
+
       useEffect(()=>{
-        if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+        if(localStorage.getItem('role')!='admin'){
           router.push('/');
         }
       },[])

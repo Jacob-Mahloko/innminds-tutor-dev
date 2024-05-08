@@ -39,7 +39,7 @@ const Lessons:FC=()=>{
     }
   },[])
 
-  console.log(subjects)
+  
   return (
   <Suspense fallback={<h3>Lessons failed</h3>}>
     <h2 style={{textDecoration:'none',marginTop:25}}>Lessons</h2>

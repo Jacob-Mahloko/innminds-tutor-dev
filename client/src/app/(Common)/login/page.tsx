@@ -23,14 +23,14 @@ const Login: React.FC  = () =>{
       setDisable(true)
       if(login){
         login(values);
-        console.log(values)
+        
         form.resetFields();
         setTimeout(async ()=>{setDisable(false)},8000)
       }
     }
 
     const onFinishFailed:FormProps<ILogin>["onFinishFailed"] = (error) =>{
-      console.log(error)
+      
       message.error("failed")
 
     }

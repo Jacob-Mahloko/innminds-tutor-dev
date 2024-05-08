@@ -24,7 +24,7 @@ const TutorProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const getAllSubjects=()=>{
       axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Subject/GetAllSubject`)
-      .then(res=>{console.log(res.data.result);dispatch(GetAllSubjectsAction(res.data.result))})
+      .then(res=>{dispatch(GetAllSubjectsAction(res.data.result))})
       .catch(err=>console.log(err))
   }
 
