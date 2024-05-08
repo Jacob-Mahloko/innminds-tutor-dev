@@ -16,3 +16,30 @@ Community Support: Join a vibrant community of learners and educators, where stu
 
 
 [Checkout our wiki](https://github.com/Jacob-Mahloko/innminds-tutor-dev/wiki)
+
+# running application
+## FRONTEND
+npm install
+
+## Development
+npm run dev
+
+## Production
+* npm run build
+* npm start
+
+## Docker frontend (if you have environement setup)
+
+* npm run docker
+* npm run docker-start
+
+docker currently running in detach mode so you will need to add the following under environment variables
+
+* ENV NEXT_PUBLIC_API_BASE_URI ACTUAL_BASE_URL
+
+# BACKEND
+
+Visual Studio
+* select web.host as startup project
+* build application
+* run application under IIS Express
