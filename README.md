@@ -43,3 +43,7 @@ Visual Studio
 * select web.host as startup project
 * build application
 * run application under IIS Express
+
+# FRONTEND-CI
+
+* npm run ci
