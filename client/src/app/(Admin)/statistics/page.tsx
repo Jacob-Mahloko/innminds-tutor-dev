@@ -2,11 +2,18 @@
 import HeaderStats from '@/components/admin/statistics';
 import GradeBarChart from '@/components/chart';
 import { useAdmin } from '@/providers/adminProvider';
+import { useRouter } from 'next/navigation';
 import {FC, Suspense, useEffect} from 'react';
 
 const Statistics:FC=()=>{
     const {subjectStats,getSubjectStat}=useAdmin();
-
+    const router=useRouter();
+    
+    useEffect(()=>{
+        if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+          router.push('/');
+        }
+      },[])
     useEffect(()=>{
         if(!subjectStats){
         getSubjectStat()

@@ -100,7 +100,7 @@ email: string;
 profileImage: string;
 about: string;
 grade: string;
-subjectIds: string[];
+subjects: string;
 }
 export interface IRequest{
   id:string;

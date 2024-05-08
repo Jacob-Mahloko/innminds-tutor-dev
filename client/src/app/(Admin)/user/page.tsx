@@ -17,7 +17,12 @@ const User=()=>{
     const {columns}=useSearch();
     const {searchTutorState,searchStudentState}=useAdmin();
     const check:IStudent[]=[];
-    
+    useEffect(()=>{
+      if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+        router.push('/');
+      }
+    },[])
+
     return(
       <Suspense fallback={<h1>Failed create user</h1>}>
         <div className={styles.container}>

@@ -1,11 +1,12 @@
 'use client'
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import {FC, Suspense} from 'react';
+import {FC, Suspense, useEffect} from 'react';
 import { useStyles } from './styles';
 import { IRequest } from '../../../../models/interface';
 import { RequestEnum } from '@/utilis/defaults/default';
 import { useStudent } from '@/providers/studentProvider';
+import { useRouter } from 'next/navigation';
 
 const options=[
     {key:1,label:'Wrong Grade Assigned',value:'wrongSubject'},
@@ -21,7 +22,14 @@ const Requests:FC=()=>{
 
     const [form] = Form.useForm();
     const {sendStudentRequest}=useStudent();
+    const router =useRouter();
 
+    useEffect(()=>{
+        if(!localStorage.getItem('accessToken')){
+          router.push('/');
+        }
+      },[])
+      
     const onFinish=(values:IRequest)=>{
         sendStudentRequest({...values,status:RequestEnum.Await});
         form.resetFields();

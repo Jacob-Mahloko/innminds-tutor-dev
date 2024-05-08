@@ -31,7 +31,7 @@ namespace backend.Services.StudentAppService.Dto
         /// <summary>
         /// 
         /// </summary>
-        public string Username { get; set; }
+        public string ?Username { get; set; }
         /// <summary>
         /// 
         /// </summary>

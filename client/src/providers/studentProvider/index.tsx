@@ -27,7 +27,6 @@ const StudentProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       }
     })
     .then(res=>{
-      console.log(res.data.result)
        dispatch(GetSubject(res.data.result))
     })
     .catch(err=>{console.log(err)})
@@ -61,7 +60,7 @@ const StudentProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       }
     }
     )
-    .then(()=>message.success('request sent successfully'))
+    .then((res)=>message.success('request sent successfully'))
     .catch(err=>{console.log(err)})
   }
 
@@ -88,7 +87,9 @@ const StudentProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     formData.append('surname',payload.surname.toString());
     formData.append('username',payload.username.toString());
     formData.append('grade',payload.grade.toString());
-    formData.append('file',payload.file);
+    if(payload.file!=null){
+      formData.append('file',payload.file);
+    }
     formData.append('email',payload.email.toString());
     formData.append('about',payload.about.toString());
     formData.append('phoneNumber',payload.phoneNumber.toString());
@@ -101,7 +102,6 @@ const StudentProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
       }}
      )
      .then(res=>{
-       console.log(res.data.result);
        message.success("Successfully");
        dispatch(GetProfile(res.data.result))
      })

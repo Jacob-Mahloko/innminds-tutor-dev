@@ -30,7 +30,11 @@ namespace backend.Services.TutorAppService
         public async Task<TutorDto> CreateTutorAsync(CreateTutorDto input)
         {
             var student = ObjectMapper.Map<Tutor>(input);
+            student.IdentityNo = "0000000000000";
+            input.Username = student.Username = input.Email;
+            input.Password = student.Password = "Innminds@7072";
             student.User = await CreateUser(input);
+           
             return ObjectMapper.Map<TutorDto>(await _repository.InsertAsync(student));
         }
 
@@ -75,7 +79,7 @@ namespace backend.Services.TutorAppService
         {
             var user = ObjectMapper.Map<User>(input);
             ObjectMapper.Map(input, user);
-            string[] RoleNames = { "ITUTOR", "ISTUDENT" };
+            string[] RoleNames = { "ITUTOR" };
 
             //check if properties email and username not null or empty 
             if (!string.IsNullOrEmpty(user.NormalizedUserName) && !string.IsNullOrEmpty(user.NormalizedEmailAddress))

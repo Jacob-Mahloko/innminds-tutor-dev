@@ -1,9 +1,10 @@
 'use client'
 import { Progress, Table } from 'antd';
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import { useStyles } from './styles';
 import type { ProgressProps } from 'antd';
 import { comment } from 'postcss';
+import { useRouter } from 'next/navigation';
 
 const twoColors: ProgressProps['strokeColor'] = {
     '0%': '#ff4747',
@@ -75,6 +76,12 @@ const columns=[
 
 const Grades:FC=()=>{
     const {styles} =useStyles();
+    const router =useRouter();
+    useEffect(()=>{
+        if(!localStorage.getItem('accessToken')){
+          router.push('/');
+        }
+      },[])
     return(
         <div >
             <h1 style={{color:'gray'}}>Grade Centre</h1>

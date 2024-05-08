@@ -1,7 +1,8 @@
 import { handleActions } from "redux-actions";
-import { TutorStateContext} from "./context";
+import { ITutorStateContext, TutorStateContext} from "./context";
+import { TutorActionEnum } from "./action";
 
 
 export const reducer = handleActions({
-    
+    [TutorActionEnum.GetAllSubject]:(state:ITutorStateContext,action:ReduxActions.Action<ITutorStateContext>)=>{console.log(action.payload);return{...state,...action.payload}}
 },{});

@@ -36,7 +36,7 @@ export interface IAdminActionContext{
     sendApplication?:(payload:IApplication)=>void;
     getAllRegistration?:()=>void;
     registerStudent?:(payload:IStudent)=>void;
-    registerTutor?:(payload:ITutor)=>void;
+    registerTutor?:(payload:IStudent)=>void;
     getRequests?:()=>void;
     searchStudent?:(payload:IQuery)=>void;
     searchTutor?:(payload:IQuery)=>void;

@@ -2,7 +2,7 @@
 import { useLoginActions } from "@/providers/authProvider";
 import { Button, Card, Checkbox, Col, Form, Input, Row, message, type FormProps } from 'antd';
 import { useRouter } from 'next/navigation';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ILogin } from "../../../../models/interface";
 import { useStyles } from "./styles";
 import HButton from "@/components/Buttons/Home";
@@ -14,12 +14,18 @@ const Login: React.FC  = () =>{
     const {styles, cx}=useStyles();
     const router = useRouter();
     const [form] = Form.useForm();
+    const [disabler,setDisable]=useState(false);
 
+    useEffect(()=>{
+      localStorage.clear();
+    },[])
     const onFinish :FormProps<ILogin>["onFinish"] =(values:ILogin)=>{
+      setDisable(true)
       if(login){
         login(values);
         console.log(values)
         form.resetFields();
+        setTimeout(async ()=>{setDisable(false)},8000)
       }
     }
 
@@ -80,7 +86,7 @@ const Login: React.FC  = () =>{
                     <Form.Item  wrapperCol ={{span:24}}style={{display:'flex',justifyContent:'right'}}>
                       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-evenly',width:'100%'}}>
                         <HButton/>
-                        <Button style={{width:100}} type="primary" htmlType="submit">Submit</Button>
+                        <Button style={{width:100}} type="primary" htmlType="submit" disabled={disabler}>Submit</Button>
                       </div>
                     </Form.Item>
                     

@@ -2,6 +2,7 @@
 import { Table } from 'antd';
 import {FC, Suspense, useEffect} from 'react';
 import { useAdminActions ,useAdminState} from '@/providers/adminProvider';
+import { useRouter } from 'next/navigation';
 const columns = [
     {
       title: 'Type',
@@ -50,12 +51,18 @@ const columns = [
 const Registration:FC=()=>{
   const {getAllRegistration}=useAdminActions();
   const {registrationApplications}=useAdminState();
+  const router=useRouter();
+  useEffect(()=>{
+    if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+      router.push('/');
+    }
+  },[])
   useEffect(()=>{
     if(getAllRegistration){
       getAllRegistration();
     }
 
-  })
+  },[])
     return(
         <Suspense fallback={<h1>Failed requests</h1>}>
             <div>

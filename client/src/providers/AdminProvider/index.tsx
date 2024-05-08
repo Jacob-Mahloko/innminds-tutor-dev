@@ -29,18 +29,18 @@ const AdminProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const getAllRegistration=()=>{
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Registration/GetAllRegistration`)
-    .then(res=>{dispatch(GetRegistrationApplications(res.data.result))})
+    .then(res=>{message.loading('loading');dispatch(GetRegistrationApplications(res.data.result))})
     .catch(err=>console.log(err))
   }
 
   const registerStudent=(payload:IStudent)=>{
-    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/CreateTutor`,payload)
+    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/CreateStudent`,payload)
     .then(()=>{message.success('Successfully Created Student')})
     .catch(err=>console.log(err))
   }
-  const registerTutor=(payload:ITutor)=>{
-    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/CreateStudent`,payload)
-    .then(()=>{message.success('Successfully Created Student')})
+  const registerTutor=(payload:IStudent)=>{
+    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Tutor/CreateTutor`,{...payload,subjects:payload.subjectIds.join(',')})
+    .then(()=>{message.success('Successfully Created Tutor')})
     .catch(err=>console.log(err))
   }
   
@@ -63,12 +63,12 @@ const AdminProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const searchStudent=async (payload:IQuery)=>{
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Student/GetAllStudent?searchTerm=${payload.searchTerm}`)
-    .then(res=>{dispatch(SearchStudentAction(res.data.result))})
+    .then(res=>{message.loading('loading');dispatch(SearchStudentAction(res.data.result))})
     .catch(err=>console.log(err));
   }
   const searchTutor=async (payload:IQuery)=>{
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URI}services/app/Tutor/GetAllTutor?searchTerm=${payload.searchTerm}`)
-    .then(res=>{dispatch(SearchTutorAction(res.data.result))})
+    .then(res=>{message.loading('loading');dispatch(SearchTutorAction(res.data.result))})
   }
   
   const getGradeStat=async ()=>{

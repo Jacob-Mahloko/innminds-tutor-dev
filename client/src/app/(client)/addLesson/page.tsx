@@ -6,7 +6,7 @@ import { validateEscapeScequence } from "@/utilis/validator/validator";
 import { Button, Col, DatePicker, Form, Input, Row, Select, message, type FormProps } from 'antd';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useStyles } from "./styles";
 
 const options=[
@@ -39,7 +39,11 @@ const AddLesson: React.FC  = () =>{
 
     const state=useAdminState();
     const {createLesson}=useTutor();
-   
+    useEffect(()=>{
+      if(localStorage.getItem('role')!='itutor'){
+        router.push('/');
+      }
+    },[])
 
     const onFinish :FormProps<Lesson>["onFinish"] =(values:Lesson)=>{
         console.log({...values,dueDate:dayjs(values.Date).format('YYYY-MM-DD')})
@@ -114,7 +118,7 @@ const AddLesson: React.FC  = () =>{
                     </Form.Item>
 
                     <Form.Item<string>
-                      label="Homework Url"
+                      label="Homework"
                       name="homeworkUrl"
                       rules={[{ required: true, message: 'Please input your homework url' },{validator:validateEscapeScequence}]}
                     >

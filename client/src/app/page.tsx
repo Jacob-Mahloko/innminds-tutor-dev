@@ -41,13 +41,13 @@ const Home:FC=()=>{
       <Suspense>
       <Content style={{ padding: '0 40px' ,height:'100vh',overflowY:'auto',backgroundColor:'white'}}>
         <div className={styles.contentBox1}>
+          <div>
+            <Image src={homeTutor} alt="homeTutor" style={{height:'80%',width:'80%',marginTop:50,borderRadius:'5%',marginLeft:0,marginBottom:100}}/>
+          </div>
           <div className={styles.contentBoxText}>
             <h1>Unlock Your Potential with <br/> <span style={{color:'#00AF51'}}>Personalized Tutoring!</span></h1>
             <h3 style={{fontSize:18,color:'black'}}>Struggling with a certain subject ? <br/> Trying to <b style={{color:'#00AF51'}}>Ace</b> that test ?<br/><br/>Join Innminds Tutors</h3>
             <TButton/>
-          </div>
-          <div>
-            <Image src={homeTutor} alt="homeTutor" style={{height:'80%',width:'80%',marginTop:20,borderRadius:'10%',marginLeft:100,marginBottom:100}}/>
           </div>
         </div>
         

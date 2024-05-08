@@ -12,7 +12,7 @@ const GradeBarChart:FC<props> = ({children,data}) => {
 
   
   return (
-    <Suspense>
+    <Suspense fallback={<h1>chart broke</h1>}>
     <BarChart
         
         width={800}

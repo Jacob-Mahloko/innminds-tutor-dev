@@ -57,7 +57,7 @@ export const useStyles = createStyles(()=>({
         }
     `,
     loginFormH1:css`
-        margin-top:-30px;
+        
     `,
     notregistered:css(`
         margin-left:30px;

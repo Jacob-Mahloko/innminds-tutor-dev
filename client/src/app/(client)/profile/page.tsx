@@ -8,12 +8,20 @@ import { useStudent } from '@/providers/studentProvider';
 import TextArea from 'antd/es/input/TextArea';
 import { IStudent } from '../../../../models/interface';
 import { UploadOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
 
 const Profile:FC=()=>{
     const {styles}=useStyles();
     const [edit,setEdit]=useState(true);
     const {profile,getStudentProfile,editProfile}=useStudent();
     const [form] = Form.useForm();
+    const router=useRouter();
+
+    useEffect(()=>{
+        if(!localStorage.getItem('accessToken')){
+          router.push('/');
+        }
+      },[])
     useEffect(()=>{
         if(!profile){
             getStudentProfile();
@@ -21,6 +29,7 @@ const Profile:FC=()=>{
     },[])
 
     useEffect(()=>{
+        
         form.setFieldsValue({ 
             username: profile?.username,
             email: profile?.email,
@@ -33,8 +42,8 @@ const Profile:FC=()=>{
     },[profile])
 
     const onFinish =(values:IStudent)=>{
-        //console.log({...values,file:values.imageUrl.file.originFileObj})
-        editProfile({...profile,...values,file:values.imageUrl.file.originFileObj});  
+        
+        editProfile({...profile,...values,file:!values.imageUrl?null:values.imageUrl.file.originFileObj});  
     }
     
     return(

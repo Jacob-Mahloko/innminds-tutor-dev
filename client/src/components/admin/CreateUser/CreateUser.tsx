@@ -14,7 +14,7 @@ const grade=[
 ]
 
 interface props{
-  children?:ChildNode,
+  children?:Node,
   type:string
 }
 

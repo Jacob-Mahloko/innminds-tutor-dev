@@ -1,5 +1,6 @@
 'use client'
-import {FC} from 'react';
+import { useRouter } from 'next/navigation';
+import {FC, useEffect} from 'react';
 
 const schedule={
     week:
@@ -13,6 +14,13 @@ const schedule={
 }
 
 const Schedule:FC=()=>{
+    const router=useRouter();
+
+    useEffect(()=>{
+        if(!localStorage.getItem('accessToken')){
+          router.push('/');
+        }
+      },[])
     return(
         <div>
             <h1 style={{color:'gray'}}>Schedule</h1>

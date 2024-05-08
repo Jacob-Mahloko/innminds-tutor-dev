@@ -1,10 +1,16 @@
 import { FolderOpenOutlined,BookOutlined,UserOutlined,CalendarOutlined,ScheduleOutlined,LogoutOutlined ,BarChartOutlined, PlusCircleOutlined} from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const useClientDashHelper=()=>{
     const router=useRouter();
+    const [filter,setFilter]=useState(false)
+    useEffect(()=>{
+      if(localStorage.getItem('role')!='itutor'){
+        setFilter(true);
+      }
 
+    },[])
     enum functionType{
         
         DASHBOARD='Dashboard',
@@ -27,7 +33,8 @@ const useClientDashHelper=()=>{
     }
 
     const labels:functionType[]=[functionType.DASHBOARD,functionType.REQUEST,functionType.CALENDAR,functionType.GRADE,functionType.PROFILE,functionType.AddLesson,functionType.LOGOUT]
-    const items = [FolderOpenOutlined,BookOutlined,CalendarOutlined,BarChartOutlined,UserOutlined,PlusCircleOutlined,LogoutOutlined].map(
+    
+    const citems = [FolderOpenOutlined,BookOutlined,CalendarOutlined,BarChartOutlined,UserOutlined,PlusCircleOutlined,LogoutOutlined].map(
       (icon, index) => ({
         key: String(index + 1),
         icon: React.createElement(icon),
@@ -35,7 +42,7 @@ const useClientDashHelper=()=>{
         onClick:functions[labels[index]]
       }),
     );
-
+    const items=filter?citems.filter((data,index)=>index!=5):citems;
     return {items};
     }
 

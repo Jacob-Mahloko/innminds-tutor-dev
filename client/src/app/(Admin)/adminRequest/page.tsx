@@ -1,11 +1,9 @@
 'use client'
-import { Select, Table } from 'antd';
-import {FC, Suspense, useEffect} from 'react';
 import { useAdmin } from '@/providers/adminProvider';
-import { RequestEnum } from '@/utilis/defaults/default';
-import { Label } from 'recharts';
-import { IRequest } from '../../../../models/interface';
 import { useRequest } from '@/utilis/admin/requests/helper';
+import { Select, Table } from 'antd';
+import { useRouter } from 'next/navigation';
+import { FC, Suspense, useEffect } from 'react';
 
 
 
@@ -14,6 +12,13 @@ const {Option}=Select;
 const Requests:FC=()=>{
   const {requests,getRequests}=useAdmin();
   const {columns} = useRequest();
+  const router =useRouter();
+  
+  useEffect(()=>{
+    if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+      router.push('/');
+    }
+  },[])
   useEffect(()=>{
     if(!requests){
         getRequests();

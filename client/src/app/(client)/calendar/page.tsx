@@ -6,6 +6,7 @@ import type { Dayjs } from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { ILesson } from '../../../../models/interface';
 import { useStyles } from './styles';
+import { useRouter } from 'next/navigation';
 
 
 const ACalendar: FC = () => {
@@ -15,16 +16,21 @@ const ACalendar: FC = () => {
     
     const [date,setDate]=useState<string>();
     const {styles} =useStyles();
+    const router=useRouter();
 
+    useEffect(()=>{
+      if(!localStorage.getItem('accessToken')){
+        router.push('/');
+      }
+    },[])
+    useEffect(()=>{
+      if(getLessons){getLessons()}
+    },[])
 
-  useEffect(()=>{
-    if(getLessons){getLessons()}
-  },[])
-
-  const getDateTuple=(date: string)=> {
-        const dateObj = new Date(date);
-        return [dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()];
-  }
+    const getDateTuple=(date: string)=> {
+          const dateObj = new Date(date);
+          return [dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()];
+    }
     
     const dateCellRender = (value: Dayjs) => {
         // search for the loan that matches the date
