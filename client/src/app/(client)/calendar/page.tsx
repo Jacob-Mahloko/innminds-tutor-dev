@@ -1,103 +1,80 @@
 'use client'
-import {FC, useState} from 'react';
-import type { BadgeProps, CalendarProps } from 'antd';
+import { useStudent } from '@/providers/studentProvider';
+import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
 import type { Dayjs } from 'dayjs';
-import { IEvent } from '../../../../models/interface';
+import { FC, useEffect, useState } from 'react';
+import { ILesson } from '../../../../models/interface';
 import { useStyles } from './styles';
+import { useRouter } from 'next/navigation';
 
-const getListData = (value: Dayjs) => {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        { type: 'error', content: 'Physical Science' },
-        { type: 'error', content: 'Mathematics' },
-        { type: 'error', content: 'Computer Science' },
-        { type: 'error', content: 'Life Science' },
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: 'error', content: 'Physical Science' },
-        { type: 'error', content: 'Mathematics' },
-        { type: 'error', content: 'Computer Science' },
-        { type: 'error', content: 'Life Science' },
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: 'error', content: 'Physical Science' },
-        { type: 'error', content: 'Mathematics' },
-        { type: 'error', content: 'Computer Science' },
-        { type: 'error', content: 'Life Science' },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-};
-
-const getMonthData = (value: Dayjs) => {
-  if (value.month() === 8) {
-    return 1394;
-  }
-};
 
 const ACalendar: FC = () => {
-
-    const [data,setData]=useState<IEvent[]>([]);
-    const [date,setDate]=useState<Dayjs>();
+  
+    const {getLessons,lessons}=useStudent();
+    const [data,setData]=useState<ILesson[]>(lessons);
+    
+    const [date,setDate]=useState<string>();
     const {styles} =useStyles();
-  const monthCellRender = (value: Dayjs) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
-  };
+    const router=useRouter();
 
-  const dateCellRender = (value: Dayjs) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events" style={{marginLeft:-35,overflowX:'hidden',scrollbarWidth:'thin'}} onClick={()=>{setData(()=>listData)
-        setDate(value)}}>
+    useEffect(()=>{
+      if(!localStorage.getItem('accessToken')){
+        router.push('/');
+      }
+    },[])
+    useEffect(()=>{
+      if(getLessons){getLessons()}
+    },[])
 
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type as BadgeProps['status']} text={'PS'} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
+    const getDateTuple=(date: string)=> {
+          const dateObj = new Date(date);
+          return [dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()];
+    }
+    
+    const dateCellRender = (value: Dayjs) => {
+        // search for the loan that matches the date
+        const loan = lessons?.find((loan) => {
+            const dueDate = getDateTuple(loan.dueDate);
+            return value.year() === dueDate[0] && value.month() === dueDate[1] && value.date() === dueDate[2];
+        });
 
-  const cellRender: CalendarProps<Dayjs>['cellRender'] = (current, info) => {
-    if (info.type === 'date') return dateCellRender(current);
-    if (info.type === 'month') return monthCellRender(current);
-    return info.originNode;
-  };
+        console.log(loan)
+        return (loan!=undefined?
+             <ul className="events" style={{marginLeft:-30,overflowX:'hidden',scrollbarWidth:'thin'}} >
+                <li>{loan?.topic}</li>
+             </ul>:<></>
+          );
+    }
 
+  const cellRender = (current: any, info: any) => {
+        if (!current || !info) {
+         
+        } else {
+            return dateCellRender(current);
+        }
+    }
+
+  
   return(
-    <>  
+    <div>  
         <h1>Calendar</h1>
         <hr/>
         <div className={styles.sideBar}>
 
-            <Calendar cellRender={cellRender} className={styles.calendar} fullscreen={false}/>;
+            <Calendar cellRender={cellRender} className={styles.calendar} fullscreen={false} onSelect={(e)=>setDate(e.format('YYYY-MM-DD'))}/>
             <div className={styles.container}>
                 <h1 style={{color:'gray',marginLeft:30}}>Events</h1>
-                {data.map(data=>(
-                    <div key={data.content} style={{backgroundColor:'gray',height:100,textAlign:'center',color:'white',borderRadius:5,margin:10}}>
-                        <h3 style={{marginTop:10}}>{data.type}</h3>
-                        <p>{data.content}<br/>{date.year()+":"+date.month()+":"+date.day()}</p>
+                {(lessons?.filter(res=>res.dueDate==date))?.map(data=>(
+                    <div key={data.topic} style={{backgroundColor:'gray',height:100,textAlign:'center',color:'white',borderRadius:5,margin:10}}>
+                        <h3 style={{marginTop:10}}>{'Homework'}</h3>
+                        <p>{data.topic}<br/></p>
                     </div>
                 ))}
+                
             </div>
         </div>
-    </>
+    </div>
   ); 
   
   

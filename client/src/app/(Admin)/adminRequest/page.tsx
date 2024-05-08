@@ -1,36 +1,37 @@
-import { Table } from 'antd';
-import {FC} from 'react';
+'use client'
+import { useAdmin } from '@/providers/adminProvider';
+import { useRequest } from '@/utilis/admin/requests/helper';
+import { Select, Table } from 'antd';
+import { useRouter } from 'next/navigation';
+import { FC, Suspense, useEffect } from 'react';
 
-const columns = [
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: 'Details',
-      dataIndex: 'detail',
-      key: 'detail',
-    },
-    {
-      title: 'Username',
-      dataIndex: 'Username',
-      key: 'Username',
-    },
-    {
-        title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-      },
-  ];
+
+
+const {Option}=Select;
 
 const Requests:FC=()=>{
+  const {requests,getRequests}=useAdmin();
+  const {columns} = useRequest();
+  const router =useRouter();
+  
+  useEffect(()=>{
+    if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+      router.push('/');
+    }
+  },[])
+  useEffect(()=>{
+    if(!requests){
+        getRequests();
+    }
+  },[])
     return(
-        <div>
-            <h1>Requests</h1>
-            <hr/>
-            <Table columns={columns}/>
-        </div>
+        <Suspense fallback={<h1>Failed requests</h1>}>
+            <div>
+                <h1>Requests</h1>
+                <hr/>
+                <Table columns={columns} dataSource={requests?.map(data=>({...data,key:data.id}))}/>
+            </div>
+        </Suspense>
         
     );
 }

@@ -7,7 +7,7 @@ export const useStyles = createStyles(()=>({
         display:flex;
         flex-direction:row;
        
-        justify-content:space-around;
+        justify-content:center;
         background-color:white;
         align-items:center;
 

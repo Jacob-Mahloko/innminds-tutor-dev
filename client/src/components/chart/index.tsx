@@ -1,25 +1,23 @@
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { useStyles } from './styles';
+'use client'
+import { FC, Suspense } from 'react';
+import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
 
 // Sample data representing the grades of students
-const studentGrades = [
-  { name: '0-50%',  Grade: 10 },
-  { name: '51-60%', Grade: 15 },
-  { name: '61-70%', Grade: 20 },
-  { name: '71-80%', Grade: 25 },
-  { name: '81-90%', Grade: 18 },
-  { name: '91-100%',Grade: 12 },
-];
+interface props{
+  children?:ChildNode,
+  data:{name:string,value:number}[];
+}
+const GradeBarChart:FC<props> = ({children,data}) => {
+  
 
-const GradeBarChart = () => {
-    const {styles}=useStyles();
+  
   return (
+    <Suspense fallback={<h1>chart broke</h1>}>
     <BarChart
-        className={styles.container}
-        width={300}
+        
+        width={800}
         height={200}
-        data={studentGrades}
+        data={data}
         margin={{top:30}}
     >
       <CartesianGrid strokeDasharray="3 3" />
@@ -27,8 +25,9 @@ const GradeBarChart = () => {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Bar dataKey="Grade" fill="#8884d8" />
+      <Bar dataKey="value" fill="lightblue" />
     </BarChart>
+    </Suspense>
   );
 };
 

@@ -25,42 +25,42 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Layout style={{height:'100vh'}}>
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
-        >
+          <Layout style={{height:'100vh'}}>
+            <Sider
+              breakpoint="lg"
+              collapsedWidth="0"
+              onBreakpoint={(broken) => {
+                
+              }}
+              onCollapse={(collapsed, type) => {
+                
+              }}
+            >
 
-          <Menu
-              theme="dark"
-              mode="inline"
-              items={items}
-              style={{ flex: 1, minWidth: 0,justifyContent:'right',marginRight:20,marginTop:60}}
-            />
-        </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: 'dark',alignContent:'center',textAlign:'center'}} >
-            <div className="demo-logo" ><h2 style={{color:'white'}}>Innminds Admin</h2></div>
-            
-          </Header>
-          
-          <Content style={{ padding: '0 40px' ,height:'100vh',overflowY:'auto',backgroundColor:'white'}}>
-            <Suspense fallback={<h3>admin dashboard broke</h3>}>
-              {children}
-            </Suspense>
-          </Content>
-          
-          <Footer style={{ textAlign: 'center'}}>
-            Innminds Tutors ©{new Date().getFullYear()} 
-          </Footer>
-        </Layout>
-    </Layout>
+              <Menu
+                  theme="dark"
+                  mode="inline"
+                  items={items}
+                  style={{ flex: 1, minWidth: 0,justifyContent:'right',marginRight:20,marginTop:60}}
+                />
+            </Sider>
+            <Layout>
+              <Header style={{ padding: 0, background: 'dark',alignContent:'center',textAlign:'center'}} >
+                <div className="demo-logo" ><h2 style={{color:'white'}}>Innminds Admin</h2></div>
+                
+              </Header>
+              
+              <Content style={{ padding: '0 40px' ,height:'100vh',overflowY:'auto',backgroundColor:'white'}}>
+                <Suspense fallback={<h3>admin dashboard broke</h3>}>
+                  {children}
+                </Suspense>
+              </Content>
+              
+              <Footer style={{ textAlign: 'center'}}>
+                Innminds Tutors ©{new Date().getFullYear()} 
+              </Footer>
+            </Layout>
+          </Layout>
       </body>
     </html>
   );

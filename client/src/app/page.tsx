@@ -4,8 +4,8 @@ import TButton from '@/components/Buttons/TButton';
 import useLogin from '@/utilis/common/login/helper';
 import { Layout, Menu, theme } from 'antd';
 import Image from 'next/image';
-import { FC } from 'react';
-import homeTutor from '../../public/homeTutor.webp';
+import { FC, Suspense } from 'react';
+import homeTutor from '../../public/homeTutor.png';
 import reading from '../../public/reading.jpg';
 import highSchool from '../../public/highSchool.jpg';
 import mentorship from '../../public/mentorship.jpg';
@@ -25,27 +25,29 @@ const Home:FC=()=>{
 
 
   return (
+    <Suspense fallback={<h1>Application Failed</h1>}>
     <Layout style={{height:'100vh'}}>
-      <Header style={{ display: 'flex', alignItems: 'center'}}>
+      <Header style={{ display: 'flex', alignItems: 'center',backgroundColor:'white',color:'gray',fontSize:24}}>
         
-        <div className="demo-logo" ><h2 style={{color:'white'}}>Innminds Tutors</h2></div>
+        <div className="demo-logo" ><h2 style={{color:'orange',fontSize:30}}>Innminds Tutors</h2></div>
         <Menu
-          theme="dark"
+         
           mode="horizontal"
           items={items}
-          style={{ flex: 1, minWidth: 0,justifyContent:'right',marginRight:20}}
+          style={{ flex: 1, minWidth: 0,justifyContent:'right',color:'black',marginTop:'3px',marginRight:18,backgroundColor:'00AF51',fontWeight:'bold'}}
         />
+        
       </Header>
-      
+      <Suspense>
       <Content style={{ padding: '0 40px' ,height:'100vh',overflowY:'auto',backgroundColor:'white'}}>
         <div className={styles.contentBox1}>
+          <div>
+            <Image src={homeTutor} alt="homeTutor" style={{height:'80%',width:'80%',marginTop:50,borderRadius:'5%',marginLeft:0,marginBottom:100}}/>
+          </div>
           <div className={styles.contentBoxText}>
             <h1>Unlock Your Potential with <br/> <span style={{color:'#00AF51'}}>Personalized Tutoring!</span></h1>
-            <h3 style={{color:'GrayText'}}>Ready to unleash your brilliance? <br/>Let&#39;s get started!</h3>
+            <h3 style={{fontSize:18,color:'black'}}>Struggling with a certain subject ? <br/> Trying to <b style={{color:'#00AF51'}}>Ace</b> that test ?<br/><br/>Join Innminds Tutors</h3>
             <TButton/>
-          </div>
-          <div>
-            <Image src={homeTutor} alt="homeTutor" style={{height:'100%',width:'110%'}}/>
           </div>
         </div>
         
@@ -83,19 +85,20 @@ const Home:FC=()=>{
           </div>
           <div className={styles.contentBoxText}>
             <h1>Why consider <br/> <span style={{color:'#00AF51'}}>Personalized Tutoring?</span></h1>
-            <h2 style={{color:'GrayText'}}>1. Ready to unleash your brilliance? <br/>Let&#39;s get started!</h2>
-            <h2 style={{color:'GrayText'}}>1. Ready to unleash your brilliance? <br/>Let&#39;s get started!</h2>
-            <h2 style={{color:'GrayText'}}>1. Ready to unleash your brilliance? <br/>Let&#39;s get started!</h2>
+            <h2 style={{color:'GrayText'}}>1. Ready to unleash your brilliance?</h2>
+            <h2 style={{color:'GrayText'}}>2. Self pace learning<br/>Work at you preferred time!</h2>
+            <h2 style={{color:'GrayText'}}>3. Come Join us to Academic Success <br/>Let&#39;s get started!</h2>
             <TButton/>
           </div>
         </div>
       </Content>
-      
+      </Suspense>
       <Footer style={{ textAlign: 'center'}}>
         Innminds Tutors ©{new Date().getFullYear()} 
       </Footer>
     
     </Layout>
+    </Suspense>
   );
 }
 

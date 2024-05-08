@@ -1,28 +1,57 @@
 'use client'
+import { useStudent } from '@/providers/studentProvider';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FC, Suspense } from 'react';
+import { FC, Suspense, useEffect } from 'react';
 import { useStyles } from './styles';
+import { useTutor } from '@/providers/tutorProvider';
 
-const subject= [{key:1,Topic:"Topic 1",route:`lesson?name=topic1`,color:'red'},
-                {key:2,Topic:"Topic 2",route:`lesson?name=topic2`,color:'green'},
-                {key:3,Topic:"Topic 3",route:`lesson?name=topic3`,color:'blue'},
-                {key:4,Topic:"Topic 4",route:`lesson?name=topic4`,color:'pink'},
-                {key:5,Topic:"Topic 5",route:`lesson?name=topic5`,color:'orange'},
-                {key:6,Topic:"Topic 6",route:`lesson?name=topic6`,color:'violet'},
+const colors= ['red',
+                'green',
+                'blue',
+                'pink',
+                'orange',
+                'violet'
                 ]
 
 const Lessons:FC=()=>{
   const {styles}=useStyles();
   const router=useRouter();
   const subjectName=useSearchParams().get('name');
-  return (<Suspense fallback={<h3>Lessons failed</h3>}>
+  const {subjects,getSubjects}=useStudent();
+  const {allSubjects,getAllSubjects}=useTutor();
+
+
+  useEffect(()=>{
+    if(!localStorage.getItem('accessToken')){
+      router.push('/');
+    }
+  },[])
+  useEffect(()=>{
+
+    if(localStorage.getItem('role')=='istudent'){
+      if(getSubjects){
+        getSubjects();
+      }
+    }else{
+      if(getAllSubjects){
+        getAllSubjects();
+      }
+    }
+  },[])
+
+  console.log(subjects)
+  return (
+  <Suspense fallback={<h3>Lessons failed</h3>}>
     <h2 style={{textDecoration:'none',marginTop:25}}>Lessons</h2>
     <hr/>
     <div className={styles.dashtabs}>
         
-        {subject.map(data=>(
-            <div key={data.key} className={styles.tabs} style={{backgroundColor:data.color}} onClick={()=>router.push(`/${data.route}`)} >{data.Topic}</div>
+        {subjects?.filter(data=>data.name==subjectName)?.at(0)?.lessons?.map((data,index)=>(
+            <div key={data.id} className={styles.tabs} style={{backgroundColor:colors[index]}} onClick={()=>router.push(`/lesson?subject=${subjectName}&name=${data.topic}`)} >{data.topic}</div>
         ))}
+        {allSubjects?.filter(data=>data?.name+data.grade==subjectName)?.at(0)?.lessons?.map((data,index)=>(
+            <div key={data.id} className={styles.tabs} style={{backgroundColor:colors[index]}} onClick={()=>router.push(`/lesson?subject=${subjectName}&name=${data.topic}`)} >{data.topic}</div>
+        ))}  
     </div>
     </Suspense>
   );

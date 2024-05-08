@@ -1,37 +1,69 @@
 'use client'
 import HeaderStats from '@/components/admin/statistics';
 import GradeBarChart from '@/components/chart';
-import {FC} from 'react';
+import { useAdmin } from '@/providers/adminProvider';
+import { useRouter } from 'next/navigation';
+import {FC, Suspense, useEffect} from 'react';
 
 const Statistics:FC=()=>{
+    const {subjectStats,getSubjectStat}=useAdmin();
+    const router=useRouter();
+    
+    useEffect(()=>{
+        if(localStorage.getItem('role')!='iadmin'||localStorage.getItem('role')!='admin'){
+          router.push('/');
+        }
+      },[])
+    useEffect(()=>{
+        if(!subjectStats){
+        getSubjectStat()
+        }
+    },[])
+
     return(
-        <div>
-            <h1>Statistics</h1>
-            <hr/>
+        <Suspense fallback={<h1>Statistic </h1>}>
             <div>
-                <HeaderStats/>
-                <div style={{marginTop:50}}>
-                    <h3 style={{textAlign:'center',backgroundColor:'black',color:'white',padding:5}}>Grade 8</h3>
-                    <GradeBarChart/>
-                </div>
-                <div style={{marginTop:50}}>
-                    <h3 style={{textAlign:'center',backgroundColor:'black',color:'white',padding:5}}>Grade 9</h3>
-                    <GradeBarChart/>
-                </div>
-                <div style={{marginTop:50}}>
-                    <h3 style={{textAlign:'center',backgroundColor:'black',color:'white',padding:5}}>Grade 10</h3>
-                    <GradeBarChart/>
-                </div>
-                <div style={{marginTop:50}}>
-                    <h3 style={{textAlign:'center',backgroundColor:'black',color:'white',padding:5}}>Grade 11</h3>
-                    <GradeBarChart/>
-                </div>
-                <div style={{marginTop:50}}>
-                    <h3 style={{textAlign:'center',backgroundColor:'black',color:'white',padding:5}}>Grade 12</h3>
-                    <GradeBarChart/>
+                <h1>Statistics</h1>
+                <hr/>
+                <div>
+                    <HeaderStats/>
+                    <div key="grade 10" style={{marginTop:50}}>
+                        <h3 style={{textAlign:'center',backgroundColor:'navy',color:'white',padding:5}}>Grade 10</h3>
+                        <Suspense><GradeBarChart data={
+                            [
+                                {name:'Life Sci',value:subjectStats?.grade10LS},
+                                {name:'Maths',value:subjectStats?.grade10M},
+                                {name:'Phy Sci',value:subjectStats?.grade10PS},                        
+
+                            ]}
+                            
+                            /></Suspense>
+                    </div>
+                    <div key="grade 11" style={{marginTop:50}}>
+                        <h3 style={{textAlign:'center',backgroundColor:'navy',color:'white',padding:5}}>Grade 11</h3>
+                        <Suspense><GradeBarChart data={
+                            [
+                                {name:'Life Sci',value:subjectStats?.grade11LS},
+                                {name:'Maths',value:subjectStats?.grade11M},
+                                {name:'Phy Sci',value:subjectStats?.grade11PS},                        
+
+                            ]}/>
+                            </Suspense>
+                    </div>
+                    <div key="grade 12" style={{marginTop:50}}>
+                        <h3 style={{textAlign:'center',backgroundColor:'navy',color:'white',padding:5}}>Grade 12</h3>
+                        <Suspense><GradeBarChart data={
+                            [
+                                {name:'Life Sci',value:subjectStats?.grade12LS},
+                                {name:'Maths',value:subjectStats?.grade12M},
+                                {name:'Phy Sci',value:subjectStats?.grade12PS},                        
+
+                            ]}
+                        /></Suspense>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Suspense>
     );
 }
 

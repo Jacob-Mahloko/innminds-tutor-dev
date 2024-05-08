@@ -27,10 +27,6 @@ export const useStyles = createStyles(()=>({
     `,
     profileImage:
     css`
-       
-        height:150px;
-        width:150px;
-        background-color:red;
         border-radius:50%;
     `,
     buttonContainer:

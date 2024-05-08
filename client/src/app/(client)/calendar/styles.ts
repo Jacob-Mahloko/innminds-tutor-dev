@@ -5,6 +5,7 @@ export const useStyles = createStyles(()=>({
     css`
         width:30%;
         border:4px solid lightblue;
+        height:70vh;
 
         @media(max-width:768px){
             width:100%;
@@ -13,7 +14,7 @@ export const useStyles = createStyles(()=>({
     calendar:
     css`
         width:70%;
-
+        height:100%;
         @media(max-width:768px){
             width:100%;
         }
